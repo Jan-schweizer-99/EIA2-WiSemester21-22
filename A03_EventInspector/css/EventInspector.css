@@ -1,0 +1,25 @@
+#div0 {
+    position: relative;
+    float: left;
+    margin: 2.5%;
+    width: 45%;
+}
+
+#div1 {
+    position: relative;
+    float: left;
+    margin: 2.5%;
+    width: 45%;
+}
+.box {
+    background-color:rgba(255, 255, 255, 0.5);
+    height: 600px;
+    width: 50px;
+}
+span {
+    float: none;
+    position: fixed;
+    background-color:rgba(255, 0, 0, 0.5);
+    width: 200px;
+    height: 100px;
+}
