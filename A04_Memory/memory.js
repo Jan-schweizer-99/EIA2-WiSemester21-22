@@ -4,4 +4,4 @@ var random_test;
     list = list.sort(function () { return Math.random() - 0.5; });
     console.log(list);
 })(random_test || (random_test = {}));
-//# sourceMappingURL=L02_EventInspector.js.map
+//# sourceMappingURL=memory.js.map

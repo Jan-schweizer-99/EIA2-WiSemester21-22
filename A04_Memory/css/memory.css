@@ -1,0 +1,17 @@
+div {
+    position: relative;
+    float: left;
+    margin: 2.5%;
+    width: 95%;
+}
+span.card {
+    display: inline-block;
+    background-color: rgba(255, 0, 0, 1);
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    font-size: 300%;
+    border-radius: 20%;
+    margin-left: auto;
+}
