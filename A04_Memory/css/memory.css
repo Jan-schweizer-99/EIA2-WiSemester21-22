@@ -3,6 +3,28 @@ div {
     float: left;
     margin: 2.5%;
     width: 95%;
+    text-align: center;
+}
+div#settings{
+    position: relative;
+    float: left;
+    margin: 2.5%;
+    width: 95%;
+    text-align: center;
+}
+div#settings1 {
+    position: relative;
+    float: left;
+    margin: 2.5%;
+    width: 45%;
+    text-align: center;
+}
+div#settings2 {
+    position: relative;
+    float: left;
+    margin: 2.5%;
+    width: 45%;
+    text-align: center;
 }
 span.card {
     display: inline-block;
@@ -13,5 +35,4 @@ span.card {
     line-height: 100px;
     font-size: 300%;
     border-radius: 20%;
-    margin-left: auto;
 }
