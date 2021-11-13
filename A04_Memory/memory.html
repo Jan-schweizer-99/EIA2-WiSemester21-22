@@ -1,41 +1,51 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8" />
-<title>Event-Inspector</title>
-<style>
-body {
-	font-family: Arial, sans-serif;
-	font-size: 20px;
-	background: rgb(32, 32, 32);
-	color: rgb(255, 255, 255);
-}
-</style>
-<link rel="stylesheet" href="css/memory.css">
-<script src="memory.js"></script>
-</head>
-<h1 style="text-align: center;">Memory</h1>
-<body>
-	<div>
-		<span class="card">d</span>
-	</div>
+	<head>
+		<meta charset="utf-8" />
+		<title>Memory</title>
+		<link rel="stylesheet" href="css/memory.css">
+		<script src="memory.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+	<h1 style="text-align: center;">Memory</h1>
 	<div id="settings">
-	<div id="settings1">
-	<p>cardsize<p>
-	<input type="range" id="size" min="50" max="250" step="10">
-	<p>background <input type="color" id="backgroundColor" name="backgroundColor" value="#333333"></p>
-	<p>card color <input type="color" id="cards" name="backgroundColor" value="#ff0000"></p>
-	<p>font color <input type="color" id="fontcolor" name="backgroundColor" value="#ffffff"></p>
+		<fieldset>
+			<legend>cardsize</legend>
+			<span id="slider">
+				<span>
+					50px
+					<input type="range"  name="Amount" class="CardSizeSlider" id="amount" min="50" max="250" step="10" value="">
+					250px
+				</span>
+			</span>
+		</fieldset>
+		<fieldset>
+			<legend>Colors</legend>
+			<p>background <input type="color" id="backgroundColor" name="backgroundColor" value="#333333"></p>
+			<p>card color <input type="color" id="cards" name="cardColor" value="#ff0000"></p>
+			<p>font color <input type="color" id="fontcolor" name="fontColor" value="#ffffff"></p>
+		</fieldset>
+		<fieldset>
+			<legend>font</legend>
+			<select name="Font" class="dropdown" id="font">
+				<option style="font-family:Arial" id="Arial">Arial</option>
+				<option style="font-family:Comic Sans MS" id="ComicSans">comic sans MS</option>
+				<option style="font-family:Calibri" id="Calibri">calibri</option>
+			</select>
+		</fieldset>
+		<fieldset>
+			<legend>time</legend>
+			<input type="number" id="time" name="time" value="20" min="5" max="120" step="5">
+			seconds
+		</fieldset>
+		<fieldset>
+			<legend>choose word</legend>
+			<input type="text" id="codename" name="Codename" value="EIA IST COOL" minlength="2" maxlength="14">
+			<button id="start">apply</button>
+		</fieldset>
 	</div>
-	<div id="settings2">
-		<p>cardsize<p>
-		<input type="range" id="size" min="50" max="250" step="10">
-		<p>background <input type="color" id="backgroundColor" name="backgroundColor" value="#333333"></p>
-		<p>card color <input type="color" id="cards" name="backgroundColor" value="#ff0000"></p>
-		<p>font color <input type="color" id="fontcolor" name="backgroundColor" value="#ffffff"></p>
-	</div>
-</div>
 	<!--<div class="box" id="div0"></div>
 	<div class="box" id="div1"></div>!-->
 </body>
+
 </html>
