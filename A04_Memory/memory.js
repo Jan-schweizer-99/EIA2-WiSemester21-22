@@ -24,8 +24,12 @@ var random_test;
         apply.addEventListener("click", Load);
         cardcolor.addEventListener("input", changecardcolor);
         fontcardcolor.addEventListener("input", changefontcolor);
+        card.addEventListener("click", TurnCard);
         var counter = 0; //runden counter
         //console.log(document.querySelector(".card").style);      //ausgabe der styles von showcase span     
+    }
+    function TurnCard() {
+        console.log();
     }
     function setatributes() {
         showcase.setAttribute("style", "color:" + cardfontcolor + "; background:" + cardcolor + "; height:" + cardheightwidth + "; width:" + cardheightwidth + "; font-Family:" + cardfont + "; display: inline-block; margin: 5px; text-align: center; line-height: 1; font-size: " + cardheightwidth + "; border-radius: 20%; vertical-align: middle");
