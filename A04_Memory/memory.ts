@@ -7,7 +7,8 @@ namespace random_test {
     let cardcolor: string = "#ff0000";            //variable für kartenfarbe
     let cardfont: string = "arial";               //variable für ausgewählte schrift
     let cardheightwidth: string = "160px";        //variable für schriftgroeße kartenhoehe und breite
-    let cardfontcolor:  string = "#ffffff";      //variable für kartenfarbe
+    let cardfontcolor: string = "#ffffff";      //variable für kartenfarbe
+    let time: HTMLInputElement = <HTMLInputElement>document.querySelector("#time");
 
     let showcase: HTMLElement = document.createElement("span");
 
@@ -19,9 +20,6 @@ namespace random_test {
         let cardcolor: HTMLInputElement = <HTMLInputElement>document.querySelector("input#cards");
         let time: HTMLInputElement = <HTMLInputElement>document.querySelector("input#time");
         let apply: HTMLButtonElement = <HTMLButtonElement>document.querySelector("#start");
-        let card: HTMLSpanElement = <HTMLSpanElement>document.querySelector("span");
-
-        
 
 
         setatributes();                                              //atribute auf null setzen
@@ -29,20 +27,21 @@ namespace random_test {
         slider.addEventListener("input", ChangeSize);                //slider event listener
         backgroundcolor.addEventListener("input", changebackground); //backgroundcolor event listener
         font.addEventListener("input", changefont);                  //change font listener
-        apply.addEventListener("click", Load);                      
+        apply.addEventListener("click", Load);
         cardcolor.addEventListener("input", changecardcolor);
         fontcardcolor.addEventListener("input", changefontcolor);
-        card.addEventListener("click", TurnCard);
-        
+        time.addEventListener("input", timefortimer);
 
-        let counter: number = 0;                                    //runden counter
 
+        let counter: number = 0;   //runden counter
         //console.log(document.querySelector(".card").style);      //ausgabe der styles von showcase span     
     }
-    function TurnCard (): void {
-        console.log();
+
+    function timefortimer(_event: Event): void {
+        let time: HTMLInputElement = <HTMLInputElement>document.querySelector("#time");
+        console.log(time.value);
     }
-    function setatributes (): void {                                //setatributs setzt die Atribute auf standarteinstellungen  
+    function setatributes(): void {                                //setatributs setzt die Atribute auf standarteinstellungen  
         showcase.setAttribute("style", "color:" + cardfontcolor + "; background:" + cardcolor + "; height:" + cardheightwidth + "; width:" + cardheightwidth + "; font-Family:" + cardfont + "; display: inline-block; margin: 5px; text-align: center; line-height: 1; font-size: " + cardheightwidth + "; border-radius: 20%; vertical-align: middle");
         document.getElementById("settings").prepend(showcase);
         showcase.setAttribute("id", "showcase");
@@ -73,7 +72,7 @@ namespace random_test {
         cardfont = (<HTMLInputElement>_event.target).value;
         console.log(cardfont);
         setatributes();
-        
+
     }
     function changefontcolor(_event: Event): void {
         cardfontcolor = (<HTMLInputElement>_event.target).value;
@@ -86,7 +85,7 @@ namespace random_test {
     }
     function startgame(): void {                                    //Funktion start game
 
-        console.log("spiel startet");                               
+        console.log("spiel startet");
         shuffledword = sequence.slice();                            //kopiere das wort durch und schreib es in das Array shuffle_word
         shuffledword.sort(() => Math.random() - 0.5);               //vermische das Array     
         console.log(sequence);
@@ -109,16 +108,21 @@ namespace random_test {
     function hidecards(): void {                                    //Funktion hide cards
         for (let i: number = 0; i <= sequence.length - 1; i++) {    //forloop zum erneut durch die spans durch zu gehen
             let ausgewaehlte: HTMLSpanElement = <HTMLSpanElement>document.querySelector("span#span" + i + ".card"); //geh nach der erstellten id durch
-            console.log(ausgewaehlte);                              
+            //console.log(ausgewaehlte);
             ausgewaehlte.style.fontSize = "0px";                    //verstecke die beschriftung in dem sie auf 0px gesetzt wird
         }
-    }   
-    function UpdateTime (): void {
-        setTimeout(count_down, sequence.length * 1000);
+        let clock: HTMLElement = document.createElement("p"); //erzeuge neues p element
+        document.getElementById("game").prepend(clock);                                 //verschachtle das das span element in das spielfeld
+        clock.setAttribute("id", "clock");                    //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
+        clock.setAttribute("style", "clock");                    //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
+        clock.innerHTML = "40s";
+        UpdateTime();
     }
-    function count_down (): void {
-        setTimeout(count_down, sequence.length * 1000);
-        }
+    function UpdateTime(): void {
+        console.log(document.getElementById("time").nodeValue);
+    }
+
+
 }
 
 //let codeword: string = prompt("Please enter your name", "EIA-2-stinkt");

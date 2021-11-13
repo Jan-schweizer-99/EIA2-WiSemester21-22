@@ -7,6 +7,7 @@ var random_test;
     var cardfont = "arial"; //variable für ausgewählte schrift
     var cardheightwidth = "160px"; //variable für schriftgroeße kartenhoehe und breite
     var cardfontcolor = "#ffffff"; //variable für kartenfarbe
+    var time = document.querySelector("#time");
     var showcase = document.createElement("span");
     function handleLoad(_event) {
         var slider = document.querySelector("input#amount"); //kartengroese
@@ -16,7 +17,6 @@ var random_test;
         var cardcolor = document.querySelector("input#cards");
         var time = document.querySelector("input#time");
         var apply = document.querySelector("#start");
-        var card = document.querySelector("span");
         setatributes(); //atribute auf null setzen
         slider.addEventListener("input", ChangeSize); //slider event listener
         backgroundcolor.addEventListener("input", changebackground); //backgroundcolor event listener
@@ -24,12 +24,13 @@ var random_test;
         apply.addEventListener("click", Load);
         cardcolor.addEventListener("input", changecardcolor);
         fontcardcolor.addEventListener("input", changefontcolor);
-        card.addEventListener("click", TurnCard);
+        time.addEventListener("input", timefortimer);
         var counter = 0; //runden counter
         //console.log(document.querySelector(".card").style);      //ausgabe der styles von showcase span     
     }
-    function TurnCard() {
-        console.log();
+    function timefortimer(_event) {
+        var time = document.querySelector("#time");
+        console.log(time.value);
     }
     function setatributes() {
         showcase.setAttribute("style", "color:" + cardfontcolor + "; background:" + cardcolor + "; height:" + cardheightwidth + "; width:" + cardheightwidth + "; font-Family:" + cardfont + "; display: inline-block; margin: 5px; text-align: center; line-height: 1; font-size: " + cardheightwidth + "; border-radius: 20%; vertical-align: middle");
@@ -94,15 +95,18 @@ var random_test;
     function hidecards() {
         for (var i = 0; i <= sequence.length - 1; i++) { //forloop zum erneut durch die spans durch zu gehen
             var ausgewaehlte = document.querySelector("span#span" + i + ".card"); //geh nach der erstellten id durch
-            console.log(ausgewaehlte);
+            //console.log(ausgewaehlte);
             ausgewaehlte.style.fontSize = "0px"; //verstecke die beschriftung in dem sie auf 0px gesetzt wird
         }
+        var clock = document.createElement("p"); //erzeuge neues p element
+        document.getElementById("game").prepend(clock); //verschachtle das das span element in das spielfeld
+        clock.setAttribute("id", "clock"); //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
+        clock.setAttribute("style", "clock"); //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
+        clock.innerHTML = "40s";
+        UpdateTime();
     }
     function UpdateTime() {
-        setTimeout(count_down, sequence.length * 1000);
-    }
-    function count_down() {
-        setTimeout(count_down, sequence.length * 1000);
+        console.log(document.getElementById("time").nodeValue);
     }
 })(random_test || (random_test = {}));
 //let codeword: string = prompt("Please enter your name", "EIA-2-stinkt");
