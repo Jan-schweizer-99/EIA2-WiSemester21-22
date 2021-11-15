@@ -1,5 +1,5 @@
-var random_test;
-(function (random_test) {
+var memory;
+(function (memory) {
     window.addEventListener("load", handleLoad); //starte die handleload funktion
     var sequence; //eingegebenes Wort
     var shuffledword; //durchgemischtes Wort
@@ -19,13 +19,6 @@ var random_test;
         var cardcolor = document.querySelector("input#cards");
         var time = document.querySelector("input#time");
         var apply = document.querySelector("#start");
-        var card = document.querySelector("span.card");
-        for (var index = 0; index <= sequence.length; index++) {
-            if (document.querySelector("span#span" + index)) {
-                selection = index;
-                card.addEventListener("click", turncard);
-            }
-        }
         setatributes(); //atribute auf null setzen
         slider.addEventListener("input", ChangeSize); //slider event listener
         backgroundcolor.addEventListener("input", changebackground); //backgroundcolor event listener
@@ -34,11 +27,19 @@ var random_test;
         cardcolor.addEventListener("input", changecardcolor);
         fontcardcolor.addEventListener("input", changefontcolor);
         time.addEventListener("input", timefortimer);
+        //card.addEventListener("click", turncard);
         var counter = 0; //runden counter
         //console.log(document.querySelector(".card").style);      //ausgabe der styles von showcase span     
     }
-    function turncard(_event) {
-        console.log("blablabla");
+    function turncard() {
+        var card = document.querySelectorAll("span.card");
+        for (var index = 0; index < card.length; index++) {
+        }
+        console.log(card);
+    }
+    function turncard1() {
+        console.log(selection);
+        turncard();
     }
     function timefortimer(_event) {
         var time = document.querySelector("#time");
@@ -117,6 +118,7 @@ var random_test;
         clock.setAttribute("id", "clock"); //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
         document.getElementById("clock").innerText = timevar.toString() + "s";
         setInterval(UpdateTime, 1000);
+        turncard();
     }
     function UpdateTime() {
         if (timevar == 0) {
@@ -128,7 +130,7 @@ var random_test;
             document.getElementById("clock").innerText = timevar.toString() + "s";
         }
     }
-})(random_test || (random_test = {}));
+})(memory || (memory = {}));
 //let codeword: string = prompt("Please enter your name", "EIA-2-stinkt");
 //let chars: string[] = codeword.split("");
 //console.log(chars);

@@ -1,4 +1,4 @@
-namespace random_test {
+namespace memory {
     window.addEventListener("load", handleLoad); //starte die handleload funktion
 
     let sequence: string[];                      //eingegebenes Wort
@@ -22,14 +22,7 @@ namespace random_test {
         let cardcolor: HTMLInputElement = <HTMLInputElement>document.querySelector("input#cards");
         let time: HTMLInputElement = <HTMLInputElement>document.querySelector("input#time");
         let apply: HTMLButtonElement = <HTMLButtonElement>document.querySelector("#start");
-        let card: HTMLSpanElement = <HTMLSpanElement>document.querySelector("span.card");
 
-        for (let index: number = 0; index <= sequence.length; index++) {
-            if (<HTMLSpanElement>document.querySelector("span#span" + index)) {
-                selection = index;
-                card.addEventListener("click", turncard);
-            }
-        }
 
 
         setatributes();                                              //atribute auf null setzen
@@ -41,12 +34,23 @@ namespace random_test {
         cardcolor.addEventListener("input", changecardcolor);
         fontcardcolor.addEventListener("input", changefontcolor);
         time.addEventListener("input", timefortimer);
+        //card.addEventListener("click", turncard);
 
         let counter: number = 0;   //runden counter
         //console.log(document.querySelector(".card").style);      //ausgabe der styles von showcase span     
     }
-    function turncard (_event: Event): void {
-        console.log("blablabla");
+    function turncard(): void {
+
+        let card: NodeList = document.querySelectorAll("span.card");
+        for (let index: number = 0; index < card.length; index++) {
+
+        }
+        console.log(card);
+    }
+    function turncard1(): void {
+
+        console.log(selection);
+        turncard();
     }
     function timefortimer(_event: Event): void {
         let time: HTMLInputElement = <HTMLInputElement>document.querySelector("#time");
@@ -129,6 +133,7 @@ namespace random_test {
         clock.setAttribute("id", "clock");                    //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
         document.getElementById("clock").innerText = timevar.toString() + "s";
         setInterval(UpdateTime, 1000);
+        turncard();
     }
     function UpdateTime(): void {
         if (timevar == 0) {
@@ -141,7 +146,7 @@ namespace random_test {
         }
     }
 
-    
+
 }
 
 //let codeword: string = prompt("Please enter your name", "EIA-2-stinkt");
