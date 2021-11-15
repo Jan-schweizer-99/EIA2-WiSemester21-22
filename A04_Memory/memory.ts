@@ -10,6 +10,7 @@ namespace random_test {
     let cardfontcolor: string = "#ffffff";      //variable für kartenfarbe
     let time: HTMLInputElement = <HTMLInputElement>document.querySelector("#time");
     let timevar: number = 20;
+    let selection: number;
 
     let showcase: HTMLElement = document.createElement("span");
 
@@ -23,6 +24,13 @@ namespace random_test {
         let apply: HTMLButtonElement = <HTMLButtonElement>document.querySelector("#start");
         let card: HTMLSpanElement = <HTMLSpanElement>document.querySelector("span.card");
 
+        for (let index: number = 0; index <= sequence.length; index++) {
+            if (<HTMLSpanElement>document.querySelector("span#span" + index)) {
+                selection = index;
+                card.addEventListener("click", turncard);
+            }
+        }
+
 
         setatributes();                                              //atribute auf null setzen
 
@@ -33,7 +41,6 @@ namespace random_test {
         cardcolor.addEventListener("input", changecardcolor);
         fontcardcolor.addEventListener("input", changefontcolor);
         time.addEventListener("input", timefortimer);
-        card.addEventListener("click", turncard);
 
         let counter: number = 0;   //runden counter
         //console.log(document.querySelector(".card").style);      //ausgabe der styles von showcase span     

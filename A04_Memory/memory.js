@@ -9,6 +9,7 @@ var random_test;
     var cardfontcolor = "#ffffff"; //variable für kartenfarbe
     var time = document.querySelector("#time");
     var timevar = 20;
+    var selection;
     var showcase = document.createElement("span");
     function handleLoad(_event) {
         var slider = document.querySelector("input#amount"); //kartengroese
@@ -18,6 +19,13 @@ var random_test;
         var cardcolor = document.querySelector("input#cards");
         var time = document.querySelector("input#time");
         var apply = document.querySelector("#start");
+        var card = document.querySelector("span.card");
+        for (var index = 0; index <= sequence.length; index++) {
+            if (document.querySelector("span#span" + index)) {
+                selection = index;
+                card.addEventListener("click", turncard);
+            }
+        }
         setatributes(); //atribute auf null setzen
         slider.addEventListener("input", ChangeSize); //slider event listener
         backgroundcolor.addEventListener("input", changebackground); //backgroundcolor event listener
@@ -28,6 +36,9 @@ var random_test;
         time.addEventListener("input", timefortimer);
         var counter = 0; //runden counter
         //console.log(document.querySelector(".card").style);      //ausgabe der styles von showcase span     
+    }
+    function turncard(_event) {
+        console.log("blablabla");
     }
     function timefortimer(_event) {
         var time = document.querySelector("#time");
