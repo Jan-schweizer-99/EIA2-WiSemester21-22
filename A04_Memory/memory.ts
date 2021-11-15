@@ -9,6 +9,7 @@ namespace random_test {
     let cardheightwidth: string = "160px";        //variable für schriftgroeße kartenhoehe und breite
     let cardfontcolor: string = "#ffffff";      //variable für kartenfarbe
     let time: HTMLInputElement = <HTMLInputElement>document.querySelector("#time");
+    let timevar: number = 20;
 
     let showcase: HTMLElement = document.createElement("span");
 
@@ -32,14 +33,15 @@ namespace random_test {
         fontcardcolor.addEventListener("input", changefontcolor);
         time.addEventListener("input", timefortimer);
 
-
         let counter: number = 0;   //runden counter
         //console.log(document.querySelector(".card").style);      //ausgabe der styles von showcase span     
     }
 
     function timefortimer(_event: Event): void {
         let time: HTMLInputElement = <HTMLInputElement>document.querySelector("#time");
-        console.log(time.value);
+        //console.log(time.value);
+        timevar = Number(time.value);
+        console.log(timevar);
     }
     function setatributes(): void {                                //setatributs setzt die Atribute auf standarteinstellungen  
         showcase.setAttribute("style", "color:" + cardfontcolor + "; background:" + cardcolor + "; height:" + cardheightwidth + "; width:" + cardheightwidth + "; font-Family:" + cardfont + "; display: inline-block; margin: 5px; text-align: center; line-height: 1; font-size: " + cardheightwidth + "; border-radius: 20%; vertical-align: middle");
@@ -114,15 +116,21 @@ namespace random_test {
         let clock: HTMLElement = document.createElement("p"); //erzeuge neues p element
         document.getElementById("game").prepend(clock);                                 //verschachtle das das span element in das spielfeld
         clock.setAttribute("id", "clock");                    //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
-        clock.setAttribute("style", "clock");                    //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
-        clock.innerHTML = "40s";
-        UpdateTime();
+        document.getElementById("clock").innerText = timevar.toString() + "s";
+        setInterval(UpdateTime, 1000);
     }
     function UpdateTime(): void {
-        console.log(document.getElementById("time").nodeValue);
+        if (timevar == 0) {
+            window.location.reload();
+            alert("you lost");
+        }
+        else {
+            timevar--;
+            document.getElementById("clock").innerText = timevar.toString() + "s";
+        }
     }
 
-
+    
 }
 
 //let codeword: string = prompt("Please enter your name", "EIA-2-stinkt");

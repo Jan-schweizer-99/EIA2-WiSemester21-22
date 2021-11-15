@@ -8,6 +8,7 @@ var random_test;
     var cardheightwidth = "160px"; //variable für schriftgroeße kartenhoehe und breite
     var cardfontcolor = "#ffffff"; //variable für kartenfarbe
     var time = document.querySelector("#time");
+    var timevar = 20;
     var showcase = document.createElement("span");
     function handleLoad(_event) {
         var slider = document.querySelector("input#amount"); //kartengroese
@@ -30,7 +31,9 @@ var random_test;
     }
     function timefortimer(_event) {
         var time = document.querySelector("#time");
-        console.log(time.value);
+        //console.log(time.value);
+        timevar = Number(time.value);
+        console.log(timevar);
     }
     function setatributes() {
         showcase.setAttribute("style", "color:" + cardfontcolor + "; background:" + cardcolor + "; height:" + cardheightwidth + "; width:" + cardheightwidth + "; font-Family:" + cardfont + "; display: inline-block; margin: 5px; text-align: center; line-height: 1; font-size: " + cardheightwidth + "; border-radius: 20%; vertical-align: middle");
@@ -101,12 +104,18 @@ var random_test;
         var clock = document.createElement("p"); //erzeuge neues p element
         document.getElementById("game").prepend(clock); //verschachtle das das span element in das spielfeld
         clock.setAttribute("id", "clock"); //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
-        clock.setAttribute("style", "clock"); //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
-        clock.innerHTML = "40s";
-        UpdateTime();
+        document.getElementById("clock").innerText = timevar.toString() + "s";
+        setInterval(UpdateTime, 1000);
     }
     function UpdateTime() {
-        console.log(document.getElementById("time").nodeValue);
+        if (timevar == 0) {
+            window.location.reload();
+            alert("you lost");
+        }
+        else {
+            timevar--;
+            document.getElementById("clock").innerText = timevar.toString() + "s";
+        }
     }
 })(random_test || (random_test = {}));
 //let codeword: string = prompt("Please enter your name", "EIA-2-stinkt");
