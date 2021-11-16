@@ -40,8 +40,8 @@ namespace memory {
         //console.log(document.querySelector(".card").style);      //ausgabe der styles von showcase span     
     }
     function turncard(_index: number): void {
-        
-        if (counter <= sequence.length ) {
+
+        if (counter <= sequence.length) {
             if (document.getElementById("span" + _index).style.borderStyle == "solid") {
                 console.log("selbes Feld");
             }
@@ -49,32 +49,37 @@ namespace memory {
                 document.getElementById("span" + _index).style.fontSize = cardheightwidth;
                 document.getElementById("span" + _index).style.borderWidth = "thick";
                 document.getElementById("span" + _index).style.borderColor = cardfontcolor;
-                document.getElementById("span" + _index).style.borderStyle = "solid";   
-                counter++; 
+                document.getElementById("span" + _index).style.borderStyle = "solid";
+                counter++;
             }
             //if (document.getElementById("span" + _index).innerText != sequence[counter]) {
             else {
                 //    counter = 0;
                 //alert("wrong");
 
-                    hidecardsonly();
-                }
+                hidecardsonly();
+            }
         }
         if (counter == sequence.length) {
-            document.getElementById("span" + _index).style.fontSize = cardheightwidth;
-            document.getElementById("span" + _index).style.borderWidth = "thick";
-            document.getElementById("span" + _index).style.borderColor = cardfontcolor;
-            document.getElementById("span" + _index).style.borderStyle = "solid";   
             clearInterval();
-            window.location.reload();
-            alert("you win");
+            setTimeout(() => {
+                winner(_index);
+            },         1);
+
         }
 
         console.log(_index);
 
     }
 
-
+    function winner(_index: number): void {
+        document.getElementById("span" + _index).style.fontSize = cardheightwidth;
+        document.getElementById("span" + _index).style.borderWidth = "thick";
+        document.getElementById("span" + _index).style.borderColor = cardfontcolor;
+        document.getElementById("span" + _index).style.borderStyle = "solid";
+        window.location.reload();
+        alert("you win");
+    }
     function timefortimer(_event: Event): void {
         let time: HTMLInputElement = <HTMLInputElement>document.querySelector("#time");
         //console.log(time.value);
@@ -156,16 +161,16 @@ namespace memory {
         document.getElementById("clock").innerText = timevar.toString() + "s";
         setInterval(UpdateTime, 1000);
         let card: NodeList = document.querySelectorAll("span.card");
-        
+
         for (let index: number = 0; index < card.length; index++) {
             selection = index;
-            card[index].addEventListener (
-                "click", 
-                function(): void {           // anonyme Funktion
-                   turncard(index);  
-                }, 
+            card[index].addEventListener(
+                "click",
+                function (): void {           // anonyme Funktion
+                    turncard(index);
+                },
                 false
-             );
+            );
         }
     }
     function hidecardsonly(): void {                                    //Funktion hide cards
@@ -174,7 +179,7 @@ namespace memory {
             //console.log(ausgewaehlte);
             ausgewaehlte.style.fontSize = "0px";                    //verstecke die beschriftung in dem sie auf 0px gesetzt wird
             counter = 0;
-            document.getElementById("span" + i).style.borderStyle = "none"; 
+            document.getElementById("span" + i).style.borderStyle = "none";
         }
     }
     function UpdateTime(): void {
