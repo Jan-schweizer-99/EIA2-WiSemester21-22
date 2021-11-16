@@ -7,7 +7,6 @@ var memory;
     var cardfont = "arial"; //variable für ausgewählte schrift
     var cardheightwidth = "160px"; //variable für schriftgroeße kartenhoehe und breite
     var cardfontcolor = "#ffffff"; //variable für kartenfarbe
-    var time = document.querySelector("#time");
     var timevar = 20;
     var selection;
     var counter = 0; //runden counter
@@ -51,15 +50,20 @@ var memory;
             }
         }
         if (counter == sequence.length) {
-            document.getElementById("span" + _index).style.fontSize = cardheightwidth;
-            document.getElementById("span" + _index).style.borderWidth = "thick";
-            document.getElementById("span" + _index).style.borderColor = cardfontcolor;
-            document.getElementById("span" + _index).style.borderStyle = "solid";
             clearInterval();
-            window.location.reload();
-            alert("you win");
+            setTimeout(function () {
+                winner(_index);
+            }, 1);
         }
         console.log(_index);
+    }
+    function winner(_index) {
+        document.getElementById("span" + _index).style.fontSize = cardheightwidth;
+        document.getElementById("span" + _index).style.borderWidth = "thick";
+        document.getElementById("span" + _index).style.borderColor = cardfontcolor;
+        document.getElementById("span" + _index).style.borderStyle = "solid";
+        window.location.reload();
+        alert("you win");
     }
     function timefortimer(_event) {
         var time = document.querySelector("#time");
@@ -93,7 +97,6 @@ var memory;
         setatributes();
     }
     function changefont(_event) {
-        var spanelement = document.querySelector("span");
         console.log(_event.target.value);
         cardfont = _event.target.value;
         console.log(cardfont);
