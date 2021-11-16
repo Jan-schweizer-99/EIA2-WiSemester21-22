@@ -11,6 +11,7 @@ namespace memory {
     let time: HTMLInputElement = <HTMLInputElement>document.querySelector("#time");
     let timevar: number = 20;
     let selection: number;
+    let counter: number = 0;   //runden counter
 
     let showcase: HTMLElement = document.createElement("span");
 
@@ -36,22 +37,45 @@ namespace memory {
         time.addEventListener("input", timefortimer);
         //card.addEventListener("click", turncard);
 
-        let counter: number = 0;   //runden counter
+
         //console.log(document.querySelector(".card").style);      //ausgabe der styles von showcase span     
     }
-    function turncard(): void {
+    function turncard(_index: number): void {
+        
+        if (counter <= sequence.length ) {
+            if (document.getElementById("span" + _index).style.borderStyle == "solid") {
+                console.log("selbes Feld");
+            }
+            else if (document.getElementById("span" + _index).innerText == sequence[counter]) {
+                document.getElementById("span" + _index).style.fontSize = cardheightwidth;
+                document.getElementById("span" + _index).style.borderWidth = "thick";
+                document.getElementById("span" + _index).style.borderColor = cardfontcolor;
+                document.getElementById("span" + _index).style.borderStyle = "solid";   
+                counter++; 
+            }
+            //if (document.getElementById("span" + _index).innerText != sequence[counter]) {
+            else {
+                //    counter = 0;
+                //alert("wrong");
 
-        let card: NodeList = document.querySelectorAll("span.card");
-        for (let index: number = 0; index < card.length; index++) {
-
+                    hidecardsonly();
+                }
         }
-        console.log(card);
-    }
-    function turncard1(): void {
+        if (counter == sequence.length) {
+            document.getElementById("span" + _index).style.fontSize = cardheightwidth;
+            document.getElementById("span" + _index).style.borderWidth = "thick";
+            document.getElementById("span" + _index).style.borderColor = cardfontcolor;
+            document.getElementById("span" + _index).style.borderStyle = "solid";   
+            clearInterval();
+            window.location.reload();
+            alert("you win");
+        }
 
-        console.log(selection);
-        turncard();
+        console.log(_index);
+
     }
+
+
     function timefortimer(_event: Event): void {
         let time: HTMLInputElement = <HTMLInputElement>document.querySelector("#time");
         //console.log(time.value);
@@ -66,7 +90,8 @@ namespace memory {
     }
     function Load(_event: MouseEvent): void {
         let codeword: HTMLInputElement = <HTMLInputElement>document.querySelector("#codename");
-        sequence = codeword.value.split("");
+        let codeword2: string = codeword.value.replace(/ /gi, "_");
+        sequence = codeword2.split("");
         console.log("hat geklapt");
         console.log("hat geklapt");
         document.getElementById("settings").style.display = "none";
@@ -133,7 +158,27 @@ namespace memory {
         clock.setAttribute("id", "clock");                    //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
         document.getElementById("clock").innerText = timevar.toString() + "s";
         setInterval(UpdateTime, 1000);
-        turncard();
+        let card: NodeList = document.querySelectorAll("span.card");
+        
+        for (let index: number = 0; index < card.length; index++) {
+            selection = index;
+            card[index].addEventListener (
+                "click", 
+                function(): void {           // anonyme Funktion
+                   turncard(index);  
+                }, 
+                false
+             );
+        }
+    }
+    function hidecardsonly(): void {                                    //Funktion hide cards
+        for (let i: number = 0; i <= sequence.length - 1; i++) {    //forloop zum erneut durch die spans durch zu gehen
+            let ausgewaehlte: HTMLSpanElement = <HTMLSpanElement>document.querySelector("span#span" + i + ".card"); //geh nach der erstellten id durch
+            //console.log(ausgewaehlte);
+            ausgewaehlte.style.fontSize = "0px";                    //verstecke die beschriftung in dem sie auf 0px gesetzt wird
+            counter = 0;
+            document.getElementById("span" + i).style.borderStyle = "none"; 
+        }
     }
     function UpdateTime(): void {
         if (timevar == 0) {

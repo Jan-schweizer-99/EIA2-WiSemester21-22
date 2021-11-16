@@ -10,6 +10,7 @@ var memory;
     var time = document.querySelector("#time");
     var timevar = 20;
     var selection;
+    var counter = 0; //runden counter
     var showcase = document.createElement("span");
     function handleLoad(_event) {
         var slider = document.querySelector("input#amount"); //kartengroese
@@ -28,18 +29,37 @@ var memory;
         fontcardcolor.addEventListener("input", changefontcolor);
         time.addEventListener("input", timefortimer);
         //card.addEventListener("click", turncard);
-        var counter = 0; //runden counter
         //console.log(document.querySelector(".card").style);      //ausgabe der styles von showcase span     
     }
-    function turncard() {
-        var card = document.querySelectorAll("span.card");
-        for (var index = 0; index < card.length; index++) {
+    function turncard(_index) {
+        if (counter <= sequence.length) {
+            if (document.getElementById("span" + _index).style.borderStyle == "solid") {
+                console.log("selbes Feld");
+            }
+            else if (document.getElementById("span" + _index).innerText == sequence[counter]) {
+                document.getElementById("span" + _index).style.fontSize = cardheightwidth;
+                document.getElementById("span" + _index).style.borderWidth = "thick";
+                document.getElementById("span" + _index).style.borderColor = cardfontcolor;
+                document.getElementById("span" + _index).style.borderStyle = "solid";
+                counter++;
+            }
+            //if (document.getElementById("span" + _index).innerText != sequence[counter]) {
+            else {
+                //    counter = 0;
+                //alert("wrong");
+                hidecardsonly();
+            }
         }
-        console.log(card);
-    }
-    function turncard1() {
-        console.log(selection);
-        turncard();
+        if (counter == sequence.length) {
+            document.getElementById("span" + _index).style.fontSize = cardheightwidth;
+            document.getElementById("span" + _index).style.borderWidth = "thick";
+            document.getElementById("span" + _index).style.borderColor = cardfontcolor;
+            document.getElementById("span" + _index).style.borderStyle = "solid";
+            clearInterval();
+            window.location.reload();
+            alert("you win");
+        }
+        console.log(_index);
     }
     function timefortimer(_event) {
         var time = document.querySelector("#time");
@@ -55,7 +75,8 @@ var memory;
     }
     function Load(_event) {
         var codeword = document.querySelector("#codename");
-        sequence = codeword.value.split("");
+        var codeword2 = codeword.value.replace(/ /gi, "_");
+        sequence = codeword2.split("");
         console.log("hat geklapt");
         console.log("hat geklapt");
         document.getElementById("settings").style.display = "none";
@@ -118,7 +139,25 @@ var memory;
         clock.setAttribute("id", "clock"); //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
         document.getElementById("clock").innerText = timevar.toString() + "s";
         setInterval(UpdateTime, 1000);
-        turncard();
+        var card = document.querySelectorAll("span.card");
+        var _loop_1 = function (index) {
+            selection = index;
+            card[index].addEventListener("click", function () {
+                turncard(index);
+            }, false);
+        };
+        for (var index = 0; index < card.length; index++) {
+            _loop_1(index);
+        }
+    }
+    function hidecardsonly() {
+        for (var i = 0; i <= sequence.length - 1; i++) { //forloop zum erneut durch die spans durch zu gehen
+            var ausgewaehlte = document.querySelector("span#span" + i + ".card"); //geh nach der erstellten id durch
+            //console.log(ausgewaehlte);
+            ausgewaehlte.style.fontSize = "0px"; //verstecke die beschriftung in dem sie auf 0px gesetzt wird
+            counter = 0;
+            document.getElementById("span" + i).style.borderStyle = "none";
+        }
     }
     function UpdateTime() {
         if (timevar == 0) {
