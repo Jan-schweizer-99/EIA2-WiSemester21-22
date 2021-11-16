@@ -53,7 +53,7 @@ var memory;
             clearInterval();
             setTimeout(function () {
                 winner(_index);
-            }, 1);
+            }, 10);
         }
         console.log(_index);
     }

@@ -64,7 +64,7 @@ namespace memory {
             clearInterval();
             setTimeout(() => {
                 winner(_index);
-            },         1);
+            },         10);
 
         }
 
