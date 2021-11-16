@@ -8,7 +8,6 @@ namespace memory {
     let cardfont: string = "arial";               //variable für ausgewählte schrift
     let cardheightwidth: string = "160px";        //variable für schriftgroeße kartenhoehe und breite
     let cardfontcolor: string = "#ffffff";      //variable für kartenfarbe
-    let time: HTMLInputElement = <HTMLInputElement>document.querySelector("#time");
     let timevar: number = 20;
     let selection: number;
     let counter: number = 0;   //runden counter
@@ -109,7 +108,6 @@ namespace memory {
         setatributes();
     }
     function changefont(_event: Event): void {
-        let spanelement: HTMLSpanElement = <HTMLSpanElement>document.querySelector("span");
         console.log((<HTMLInputElement>_event.target).value);
         cardfont = (<HTMLInputElement>_event.target).value;
         console.log(cardfont);
@@ -126,7 +124,6 @@ namespace memory {
         setatributes();
     }
     function startgame(): void {                                    //Funktion start game
-
         console.log("spiel startet");
         shuffledword = sequence.slice();                            //kopiere das wort durch und schreib es in das Array shuffle_word
         shuffledword.sort(() => Math.random() - 0.5);               //vermische das Array     
