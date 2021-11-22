@@ -1,5 +1,10 @@
 var Canvas;
 (function (Canvas) {
+    var cloud = new Image();
+    cloud.src = "SVG/cloud.svg";
+    var forrest = new Image();
+    forrest.src = "SVG/tree_1.svg";
+    var XX;
     var crc2;
     //var img: HTMLImageElement = new Image();
     window.addEventListener("load", hndLoad);
@@ -16,36 +21,52 @@ var Canvas;
             var radius = Math.random() * 3;
             drawstars(x_1, y_1, radius);
         }
+        cloud.onload = function () {
+            for (var i = 0; i < 5; i++) {
+                var x_2 = Math.random() * 1920;
+                var y_2 = Math.random() * 300;
+                crc2.drawImage(cloud, x_2 - 230, y_2, 460, 320);
+            }
+        };
+        cloud.src = "SVG/cloud.svg";
         drawmoon();
         for (var i = 0; i < 10; i++) {
-            var x_2 = Math.random() * 1920;
-            var y_2 = Math.random() * 1080 / 2;
-            drawhils(x_2, y_2);
+            var x_3 = Math.random() * 1920;
+            var y_3 = Math.random() * 1080 / 2;
+            drawhils(x_3, y_3);
         }
         drawfloor();
+        //forrest.addEventListener("load", drawforrest);
+        drawforrest();
         //img.src = "SVG/tree_1.svg";
-        var scalefactor = 0.5;
-        var layer = 400;
-        for (var index = 0; index <= 2; index++) {
-            for (var i = 0; i < 30; i++) {
-                var wald = new Image();
-                wald.src = "SVG/tree_1.svg";
-                var x_3 = Math.random() * 1920;
-                drawtree(x_3, scalefactor, layer, wald);
-            }
-            scalefactor += 0.1;
-            layer += 10;
-        }
         for (var i = 0; i < 10000; i++) {
             var x_4 = Math.random() * 1920;
-            var y_3 = Math.random() * 1080 / 2;
-            drawgrass(x_4, y_3);
+            var y_4 = Math.random() * 1080 / 2;
+            drawgrass(x_4, y_4);
         }
         var x = Math.random() * 1920;
         var y = Math.random() * 1;
         campfire(x, y);
-        //Rahmen();
-        Rahmengenarativ();
+    }
+    function drawforrest() {
+        forrest.src = "SVG/tree_1.svg";
+        forrest.onload = function () {
+            var scalefactor = 0.5;
+            var layer = 400;
+            for (var index = 0; index <= 2; index++) {
+                for (var i = 0; i < 30; i++) {
+                    XX = Math.random() * 1920;
+                    crc2.drawImage(forrest, XX - 100 * scalefactor, layer, 239 * 1.5 * scalefactor, 268 * 1.5 * scalefactor);
+                    crc2.shadowColor = "black";
+                    crc2.shadowBlur = 120;
+                    //drawtree(XX, scalefactor, layer);
+                }
+                scalefactor += 0.1;
+                layer += 10;
+            }
+            crc2.shadowColor = "#FFFFFF00";
+            crc2.shadowBlur = 0;
+        };
     }
     function drawhils(_x, _y) {
         crc2.beginPath();
@@ -127,15 +148,6 @@ var Canvas;
         crc2.shadowColor = "#FFFFFF00";
         crc2.shadowBlur = 0;
     }
-    function drawtree(_x, _scalefactor, _layer, _img) {
-        _img.onload = function () {
-            crc2.drawImage(_img, _x - 100 * _scalefactor, _layer, 239 * 1.5 * _scalefactor, 268 * 1.5 * _scalefactor);
-            crc2.shadowColor = "black";
-            crc2.shadowBlur = 120;
-        };
-        crc2.shadowColor = "#FFFFFF00";
-        crc2.shadowBlur = 0;
-    }
     function campfire(_x, _y) {
         var img = new Image();
         //var img: HTMLImageElement = new Image();
@@ -153,41 +165,6 @@ var Canvas;
         crc2.strokeStyle = "green";
         crc2.lineWidth = 2;
         crc2.stroke();
-    }
-    function Rahmen() {
-        var img = new Image();
-        img.onload = function () {
-            crc2.shadowColor = "#FFFFFF00";
-            crc2.shadowBlur = 0;
-            crc2.drawImage(img, 0, 0, 1920, 1080);
-        };
-        img.src = "SVG/Rahmen.svg";
-    }
-    function Rahmengenarativ() {
-        for (var index = 1; index <= 24; index++) {
-            crc2.beginPath();
-            crc2.arc(80 * index - 40, 1080, 40, 0, Math.PI * 2, false);
-            //crc2.lineTo(_x, _y + 70);
-            //crc2.lineTo(_x + 80, _y + 35);
-            crc2.fillStyle = "yellow";
-            crc2.strokeStyle = "black";
-            crc2.lineWidth = 5;
-            crc2.fill();
-            crc2.stroke();
-            crc2.closePath();
-        }
-        for (var index = 1; index <= 24; index++) {
-            crc2.beginPath();
-            crc2.arc(80 * index - 40, 0, 40, 0, Math.PI * 2, false);
-            //crc2.lineTo(_x, _y + 70);
-            //crc2.lineTo(_x + 80, _y + 35);
-            crc2.fillStyle = "yellow";
-            crc2.strokeStyle = "black";
-            crc2.lineWidth = 5;
-            crc2.fill();
-            crc2.stroke();
-            crc2.closePath();
-        }
     }
 })(Canvas || (Canvas = {}));
 //# sourceMappingURL=Canvas_Autum.js.map

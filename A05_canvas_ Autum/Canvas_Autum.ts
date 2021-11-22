@@ -1,7 +1,12 @@
 namespace Canvas {
+
+  var cloud: HTMLImageElement = new Image();
+  cloud.src = "SVG/cloud.svg";
+  var forrest: HTMLImageElement = new Image();
+  forrest.src = "SVG/tree_1.svg";
+  let XX: number;
   let crc2: CanvasRenderingContext2D;
   //var img: HTMLImageElement = new Image();
-
   window.addEventListener("load", hndLoad);
   function hndLoad(_event: Event): void {
     let canvas: HTMLCanvasElement = document.querySelector("canvas")!;
@@ -9,6 +14,7 @@ namespace Canvas {
 
     crc2 = canvas.getContext("2d")!;
     console.log(crc2);
+
     drawsky();
     //stars
     for (let i: number = 0; i < 150; i++) {
@@ -17,6 +23,14 @@ namespace Canvas {
       let radius: number = Math.random() * 3;
       drawstars(x, y, radius);
     }
+    cloud.onload = function (): void {
+      for (let i: number = 0; i < 5; i++) {
+      let x: number = Math.random() * 1920;
+      let y: number = Math.random() * 300;
+      crc2.drawImage(cloud, x - 230, y, 460 , 320 );
+      }
+    };
+    cloud.src = "SVG/cloud.svg";
     drawmoon();
     for (let i: number = 0; i < 10; i++) {
       let x: number = Math.random() * 1920;
@@ -24,19 +38,11 @@ namespace Canvas {
       drawhils(x, y);
     }
     drawfloor();
-        //img.src = "SVG/tree_1.svg";
-    let scalefactor: number = 0.5;
-    let layer: number = 400;
-    for (let index: number = 0; index <= 2; index++) {
-      for (let i: number = 0; i < 30; i++) {
-        var wald: HTMLImageElement = new Image();
-        wald.src = "SVG/tree_1.svg";
-        let x: number = Math.random() * 1920;
-        drawtree(x, scalefactor, layer, wald);
-      }
-      scalefactor += 0.1;
-      layer += 10;
-    }
+    //forrest.addEventListener("load", drawforrest);
+    drawforrest();
+
+    //img.src = "SVG/tree_1.svg";
+   
 
     for (let i: number = 0; i < 10000; i++) {
       let x: number = Math.random() * 1920;
@@ -46,9 +52,28 @@ namespace Canvas {
     let x: number = Math.random() * 1920;
     let y: number = Math.random() * 1;
     campfire(x, y);
-    //Rahmen();
-    Rahmengenarativ();
   }
+  function drawforrest(): void {
+  forrest.src = "SVG/tree_1.svg";
+  forrest.onload = function (): void {
+    let scalefactor: number = 0.5;
+    let layer: number = 400;
+    for (let index: number = 0; index <= 2; index++) {
+      for (let i: number = 0; i < 30; i++) {
+        XX = Math.random() * 1920;
+        crc2.drawImage(forrest, XX - 100 * scalefactor, layer, 239 * 1.5 * scalefactor , 268 * 1.5 * scalefactor );
+        crc2.shadowColor = "black";
+        crc2.shadowBlur = 120;
+        //drawtree(XX, scalefactor, layer);
+      }
+      scalefactor += 0.1;
+      layer += 10;
+    }
+
+    crc2.shadowColor = "#FFFFFF00";
+    crc2.shadowBlur = 0;
+  };
+}
   function drawhils(_x: number, _y: number): void {    //blauer Abendhintergrund
     crc2.beginPath();
     crc2.moveTo(_x - 250 + 0, 1080 / 2 );
@@ -139,15 +164,8 @@ namespace Canvas {
     crc2.shadowColor = "#FFFFFF00";
     crc2.shadowBlur = 0;
   }
-  function drawtree(_x: number, _scalefactor: number, _layer: number, _img: HTMLImageElement): void {
-    _img.onload = function (): void {
-      crc2.drawImage(_img, _x - 100 * _scalefactor, _layer, 239 * 1.5 * _scalefactor , 268 * 1.5 * _scalefactor );
-      crc2.shadowColor = "black";
-      crc2.shadowBlur = 120;
-    };
-    crc2.shadowColor = "#FFFFFF00";
-    crc2.shadowBlur = 0;
-  }
+
+  
   function campfire(_x: number, _y: number): void {
     var img: HTMLImageElement = new Image();
     //var img: HTMLImageElement = new Image();
@@ -167,43 +185,6 @@ namespace Canvas {
     crc2.strokeStyle = "green";
     crc2.lineWidth = 2;
     crc2.stroke();
-  }
-  function Rahmen(): void {
-    var img: HTMLImageElement = new Image();
-    img.onload = function (): void {
-      crc2.shadowColor = "#FFFFFF00";
-      crc2.shadowBlur = 0;
-      crc2.drawImage(img, 0, 0, 1920, 1080);
-    };
-    img.src = "SVG/Rahmen.svg";
-  }
-  function Rahmengenarativ(): void {
-    for (let index: number = 1; index <= 24; index++) {
-      crc2.beginPath();
-      crc2.arc(80 * index - 40, 1080 , 40, 0, Math.PI * 2, false);
-      //crc2.lineTo(_x, _y + 70);
-      //crc2.lineTo(_x + 80, _y + 35);
-      crc2.fillStyle = "yellow";
-      crc2.strokeStyle = "black";
-      crc2.lineWidth = 5;
-      crc2.fill();
-      crc2.stroke();
-      crc2.closePath();
-    }
-    for (let index: number = 1; index <= 24; index++) {
-      crc2.beginPath();
-      crc2.arc(80 * index - 40, 0, 40, 0, Math.PI * 2, false);
-      //crc2.lineTo(_x, _y + 70);
-      //crc2.lineTo(_x + 80, _y + 35);
-      crc2.fillStyle = "yellow";
-      crc2.strokeStyle = "black";
-      crc2.lineWidth = 5;
-      crc2.fill();
-      crc2.stroke();
-      crc2.closePath();
-      
-    }
-
   }
 
 }
