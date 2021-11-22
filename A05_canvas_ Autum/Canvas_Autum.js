@@ -1,5 +1,5 @@
-var Canvas;
-(function (Canvas) {
+var Canvas_Autum;
+(function (Canvas_Autum) {
     var cloud = new Image();
     cloud.src = "SVG/cloud.svg";
     var forrest = new Image();
@@ -166,5 +166,5 @@ var Canvas;
         crc2.lineWidth = 2;
         crc2.stroke();
     }
-})(Canvas || (Canvas = {}));
+})(Canvas_Autum || (Canvas_Autum = {}));
 //# sourceMappingURL=Canvas_Autum.js.map

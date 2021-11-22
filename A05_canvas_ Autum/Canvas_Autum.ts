@@ -1,4 +1,4 @@
-namespace Canvas {
+namespace Canvas_Autum {
 
   var cloud: HTMLImageElement = new Image();
   cloud.src = "SVG/cloud.svg";
