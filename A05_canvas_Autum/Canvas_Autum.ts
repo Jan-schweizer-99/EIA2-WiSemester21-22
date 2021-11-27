@@ -1,3 +1,11 @@
+/*
+Aufgabe: Aufgabe 05 Canvas
+Name: Jan Schweizer
+Matrikel: 268365
+Datum: 27.01.2021
+Quellen: Artur Erlich (MIB) hat mir empfolen ein skript zu schreiben damit ich das generierte Canvas Element (aus inkskape) 
+vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projekt. Es befindet sich im Ordner OriginMover
+*/
 namespace Canvas_Autum {
 
   var cloud: HTMLImageElement = new Image();
