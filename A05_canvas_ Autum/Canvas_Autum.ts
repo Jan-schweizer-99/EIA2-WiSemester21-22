@@ -2,8 +2,8 @@ namespace Canvas_Autum {
 
   var cloud: HTMLImageElement = new Image();
   cloud.src = "SVG/cloud.svg";
-  var forrest: HTMLImageElement = new Image();
-  forrest.src = "SVG/tree_1.svg";
+  //var forrest: HTMLImageElement = new Image();
+  //forrest.src = "SVG/tree_1.svg";
 
   let XX: number;
   let crc2: CanvasRenderingContext2D;
@@ -24,19 +24,20 @@ namespace Canvas_Autum {
       let radius: number = Math.random() * 3;
       drawstars(x, y, radius);
     }
-    cloud.onload = function (): void {
-      for (let i: number = 0; i < 5; i++) {
-        let x: number = Math.random() * 1920;
-        let y: number = Math.random() * 300;
-        crc2.drawImage(cloud, x - 230, y, 460, 320);
-      }
-    };
-    cloud.src = "SVG/cloud.svg";
+    // cloud.onload = function (): void {
+    //   for (let i: number = 0; i < 5; i++) {
+    //     let x: number = Math.random() * 1920;
+    //     let y: number = Math.random() * 300;
+    //     crc2.drawImage(cloud, x - 230, y, 460, 320);
+    //   }
+    // };
+    // cloud.src = "SVG/cloud.svg";
     drawmoon();
     for (let i: number = 0; i < 10; i++) {
       let x: number = Math.random() * 1920;
       let y: number = Math.random() * 1080 / 2;
       drawhils(x, y);
+      drawcloud(Math.random() * 1920, Math.random() * 300, 5);
     }
     drawfloor();
     //drawforrest();
@@ -55,7 +56,7 @@ namespace Canvas_Autum {
       drawsquirrel(transX, transY, scale);
     }
     drawforrest();
-    for (let i: number = 0; i < 10; i++) {
+    for (let i: number = 0; i < 10; i++) {                                //blätter im Vordergrund
       drawleave1(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
       drawleave2(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
       drawleave3(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
@@ -276,6 +277,10 @@ namespace Canvas_Autum {
       crc2.stroke();
       crc2.fill();
     }
+    crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
+    crc2.strokeStyle = "black";
+    crc2.fillStyle = "white";
+    crc2.lineWidth = 1;
 
   }
 
@@ -355,6 +360,39 @@ namespace Canvas_Autum {
     crc2.strokeStyle = "green";
     crc2.lineWidth = 2;
     crc2.stroke();
+  }
+  function drawcloud(_x: number, _y: number, _scale: number): void {
+    crc2.translate(_x, _y); //erst verschieben
+    crc2.scale(_scale, _scale);   //scale
+    crc2.beginPath();
+    crc2.moveTo(29.942321, -5.599199);
+    crc2.bezierCurveTo(32.323571, -6.481144, 33.734681, -7.539477, 33.734681, -8.774199);
+    crc2.bezierCurveTo(33.734681, -11.243643, 27.296487, -13.360310, 19.447181, -13.360310);
+    crc2.bezierCurveTo(16.977737, -13.360310, 14.772875, -13.183921, 12.744404, -12.831143);
+    crc2.bezierCurveTo(10.274958, -15.124199, 6.923571, -16.447115, 3.307598, -16.447115);
+    crc2.bezierCurveTo(-1.102125, -16.447115, -5.070875, -14.418643, -7.628513, -11.243643);
+    crc2.bezierCurveTo(-7.628513, -11.420032, -7.628513, -11.508227, -7.628513, -11.684615);
+    crc2.bezierCurveTo(-7.628513, -14.947810, -10.274346, -17.593643, -13.537541, -17.593643);
+    crc2.bezierCurveTo(-15.742402, -17.593643, -17.682680, -16.447115, -18.741013, -14.595032);
+    crc2.bezierCurveTo(-20.328513, -16.358921, -23.679902, -17.593643, -27.560458, -17.593643);
+    crc2.bezierCurveTo(-33.028514, -17.593643, -37.438236, -15.212393, -37.438236, -12.301977);
+    crc2.bezierCurveTo(-37.438236, -10.890865, -36.379902, -9.567949, -34.616014, -8.686004);
+    crc2.bezierCurveTo(-36.027125, -7.186699, -36.820875, -5.334616, -36.820875, -3.306144);
+    crc2.bezierCurveTo(-36.820875, 0.221634, -34.439625, 3.132051, -31.088236, 4.454968);
+    crc2.bezierCurveTo(-31.176426, 4.719551, -31.176426, 4.984134, -31.176426, 5.248718);
+    crc2.bezierCurveTo(-31.176426, 9.923022, -27.031287, 13.627189, -22.004204, 13.627189);
+    crc2.bezierCurveTo(-19.622954, 13.627189, -17.506287, 12.833439, -15.830593, 11.510522);
+    crc2.bezierCurveTo(-14.419482, 14.244552, -11.244482, 16.184829, -7.628509, 16.184829);
+    crc2.bezierCurveTo(-3.924342, 16.184829, -0.749342, 14.244552, 0.749962, 11.334135);
+    crc2.bezierCurveTo(0.926352, 11.334135, 1.102741, 11.422325, 1.279129, 11.422325);
+    crc2.bezierCurveTo(2.337462, 15.038298, 5.865241, 17.595935, 10.186768, 17.595935);
+    crc2.bezierCurveTo(13.626352, 17.595935, 16.536768, 15.920241, 18.212462, 13.450798);
+    crc2.bezierCurveTo(19.447185, 13.715381, 20.858295, 13.803575, 22.269408, 13.803575);
+    crc2.bezierCurveTo(30.736075, 13.803575, 37.527045, 9.129268, 37.527045, 3.396630);
+    crc2.bezierCurveTo(37.527045, -0.483925, 34.528435, -3.835314, 29.942325, -5.599203);
+    crc2.fill();
+    crc2.stroke();
+    crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
   }
   function drawTreewood(_x: number, _y: number, _scale: number): void {
     crc2.translate(_x, _y); //erst verschieben
