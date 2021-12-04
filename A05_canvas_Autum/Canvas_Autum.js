@@ -1,25 +1,34 @@
+"use strict";
+/*
+Aufgabe: Aufgabe 05 Canvas
+Name: Jan Schweizer
+Matrikel: 268365
+Datum: 27.01.2021
+Quellen: Artur Erlich (MIB) hat mir empfolen ein skript zu schreiben damit ich das generierte Canvas Element (aus inkskape)
+vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projekt. Es befindet sich im Ordner OriginMover
+*/
 var Canvas_Autum;
 (function (Canvas_Autum) {
     var cloud = new Image();
     cloud.src = "SVG/cloud.svg";
     //var forrest: HTMLImageElement = new Image();
     //forrest.src = "SVG/tree_1.svg";
-    var XX;
-    var crc2;
+    let XX;
+    let crc2;
     //var img: HTMLImageElement = new Image();
     window.addEventListener("load", hndLoad);
     function hndLoad(_event) {
-        var canvas = document.querySelector("canvas");
+        let canvas = document.querySelector("canvas");
         console.log(canvas);
         crc2 = canvas.getContext("2d");
         console.log(crc2);
         drawsky();
         //stars
-        for (var i = 0; i < 150; i++) {
-            var x_1 = Math.random() * 1920;
-            var y_1 = Math.random() * 540;
-            var radius = Math.random() * 3;
-            drawstars(x_1, y_1, radius);
+        for (let i = 0; i < 150; i++) {
+            let x = Math.random() * 1920;
+            let y = Math.random() * 540;
+            let radius = Math.random() * 3;
+            drawstars(x, y, radius);
         }
         // cloud.onload = function (): void {
         //   for (let i: number = 0; i < 5; i++) {
@@ -30,30 +39,30 @@ var Canvas_Autum;
         // };
         // cloud.src = "SVG/cloud.svg";
         drawmoon();
-        for (var i = 0; i < 10; i++) {
-            var x_2 = Math.random() * 1920;
-            var y_2 = Math.random() * 1080 / 2;
-            drawhils(x_2, y_2);
+        for (let i = 0; i < 10; i++) {
+            let x = Math.random() * 1920;
+            let y = Math.random() * 1080 / 2;
+            drawhils(x, y);
             drawcloud(Math.random() * 1920, Math.random() * 300, 5);
         }
         drawfloor();
         //drawforrest();
-        for (var i = 0; i < 10000; i++) {
-            var x_3 = Math.random() * 1920;
-            var y_3 = Math.random() * 1080 / 2;
-            drawgrass(x_3, y_3);
+        for (let i = 0; i < 10000; i++) {
+            let x = Math.random() * 1920;
+            let y = Math.random() * 1080 / 2;
+            drawgrass(x, y);
         }
-        var x = Math.random() * 1920;
-        var y = Math.random() * 1;
+        let x = Math.random() * 1920;
+        let y = Math.random() * 1;
         campfire(x, y);
-        for (var i = 0; i < 4; i++) {
-            var transX = Math.random() * 1920 / 2 + 20;
-            var transY = 500 - (Math.random() * 120);
-            var scale = 2;
+        for (let i = 0; i < 4; i++) {
+            let transX = Math.random() * 1920 / 2 + 20;
+            let transY = 500 - (Math.random() * 120);
+            let scale = 2;
             drawsquirrel(transX, transY, scale);
         }
         drawforrest();
-        for (var i = 0; i < 10; i++) { //blätter im Vordergrund
+        for (let i = 0; i < 10; i++) { //blätter im Vordergrund
             drawleave1(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
             drawleave2(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
             drawleave3(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
@@ -62,25 +71,25 @@ var Canvas_Autum;
         //drawleave3(700, 200, 2 , 0, 0);
     }
     function drawtree(_transX, _transY, _scale) {
-        var tree = Math.floor(Math.random() * 3) + 1;
+        let tree = Math.floor(Math.random() * 3) + 1;
         console.log(tree);
         drawTreewood(_transX, _transY, 3 * _scale);
         if (tree == 1) {
-            for (var i = 0; i < 150; i++) { //draw leave 1
+            for (let i = 0; i < 150; i++) { //draw leave 1
                 crc2.shadowColor = "black";
                 crc2.shadowBlur = 120;
                 drawleave1(_transX, _transY - (142 * _scale), 0.5 * _scale, Math.random() * 200, 0);
             }
         }
         if (tree == 2) {
-            for (var i = 0; i < 150; i++) { //draw leave 2
+            for (let i = 0; i < 150; i++) { //draw leave 2
                 crc2.shadowColor = "black";
                 crc2.shadowBlur = 120;
                 drawleave2(_transX, _transY - (142 * _scale), 0.5 * _scale, Math.random() * 200, 0);
             }
         }
         if (tree == 3) {
-            for (var i = 0; i < 150; i++) { //draw tree 3
+            for (let i = 0; i < 150; i++) { //draw tree 3
                 crc2.shadowColor = "black";
                 crc2.shadowBlur = 120;
                 drawleave3(_transX, _transY - (142 * _scale), 0.5 * _scale, Math.random() * 200, 0);
@@ -88,10 +97,10 @@ var Canvas_Autum;
         }
     }
     function drawforrest() {
-        var scalefactor = 1;
-        var layer = 600;
-        for (var index = 0; index <= 2; index++) { //draw forrest
-            for (var i = 0; i < 20; i++) {
+        let scalefactor = 1;
+        let layer = 600;
+        for (let index = 0; index <= 2; index++) { //draw forrest
+            for (let i = 0; i < 20; i++) {
                 drawtree(Math.random() * 1920, layer, 1 * scalefactor);
                 crc2.shadowColor = "black";
                 crc2.shadowBlur = 120;
@@ -323,7 +332,7 @@ var Canvas_Autum;
         //img.src = "SVG/campfire.svg";
     }
     function drawgrass(_x, _y) {
-        var grassdirection = Math.random() * 20;
+        let grassdirection = Math.random() * 20;
         crc2.beginPath();
         crc2.moveTo(_x, _y + 1080 / 2);
         crc2.lineTo(_x, _y + grassdirection + 1080 / 2 + 25);
@@ -2906,4 +2915,3 @@ var Canvas_Autum;
         crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
     }
 })(Canvas_Autum || (Canvas_Autum = {}));
-//# sourceMappingURL=Canvas_Autum.js.map

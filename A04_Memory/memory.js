@@ -1,24 +1,25 @@
+"use strict";
 var memory;
 (function (memory) {
     window.addEventListener("load", handleLoad); //starte die handleload funktion
-    var sequence; //eingegebenes Wort
-    var shuffledword; //durchgemischtes Wort
-    var cardcolor = "#ff0000"; //variable für kartenfarbe
-    var cardfont = "arial"; //variable für ausgewählte schrift
-    var cardheightwidth = "160px"; //variable für schriftgroeße kartenhoehe und breite
-    var cardfontcolor = "#ffffff"; //variable für kartenfarbe
-    var timevar = 20;
-    var selection;
-    var counter = 0; //runden counter
-    var showcase = document.createElement("span");
+    let sequence; //eingegebenes Wort
+    let shuffledword; //durchgemischtes Wort
+    let cardcolor = "#ff0000"; //variable für kartenfarbe
+    let cardfont = "arial"; //variable für ausgewählte schrift
+    let cardheightwidth = "160px"; //variable für schriftgroeße kartenhoehe und breite
+    let cardfontcolor = "#ffffff"; //variable für kartenfarbe
+    let timevar = 20;
+    let selection;
+    let counter = 0; //runden counter
+    let showcase = document.createElement("span");
     function handleLoad(_event) {
-        var slider = document.querySelector("input#amount"); //kartengroese
-        var backgroundcolor = document.querySelector("input#backgroundColor"); //hintergrundfarbe
-        var font = document.querySelector("select#font"); //schriftart
-        var fontcardcolor = document.querySelector("input#fontcolor"); //
-        var cardcolor = document.querySelector("input#cards");
-        var time = document.querySelector("input#time");
-        var apply = document.querySelector("#start");
+        let slider = document.querySelector("input#amount"); //kartengroese
+        let backgroundcolor = document.querySelector("input#backgroundColor"); //hintergrundfarbe
+        let font = document.querySelector("select#font"); //schriftart
+        let fontcardcolor = document.querySelector("input#fontcolor"); //
+        let cardcolor = document.querySelector("input#cards");
+        let time = document.querySelector("input#time");
+        let apply = document.querySelector("#start");
         setatributes(); //atribute auf null setzen
         slider.addEventListener("input", ChangeSize); //slider event listener
         backgroundcolor.addEventListener("input", changebackground); //backgroundcolor event listener
@@ -51,7 +52,7 @@ var memory;
         }
         if (counter == sequence.length) {
             clearInterval();
-            setTimeout(function () {
+            setTimeout(() => {
                 winner(_index);
             }, 10);
         }
@@ -66,7 +67,7 @@ var memory;
         alert("you win");
     }
     function timefortimer(_event) {
-        var time = document.querySelector("#time");
+        let time = document.querySelector("#time");
         //console.log(time.value);
         timevar = Number(time.value);
         console.log(timevar);
@@ -78,8 +79,8 @@ var memory;
         showcase.innerHTML = "M";
     }
     function Load(_event) {
-        var codeword = document.querySelector("#codename");
-        var codeword2 = codeword.value.replace(/ /gi, "_");
+        let codeword = document.querySelector("#codename");
+        let codeword2 = codeword.value.replace(/ /gi, "_");
         sequence = codeword2.split("");
         console.log("hat geklapt");
         console.log("hat geklapt");
@@ -114,14 +115,14 @@ var memory;
     function startgame() {
         console.log("spiel startet");
         shuffledword = sequence.slice(); //kopiere das wort durch und schreib es in das Array shuffle_word
-        shuffledword.sort(function () { return Math.random() - 0.5; }); //vermische das Array     
+        shuffledword.sort(() => Math.random() - 0.5); //vermische das Array     
         console.log(sequence);
         console.log(shuffledword);
-        var game = document.createElement("div"); //erstelle ein spielfeld
+        let game = document.createElement("div"); //erstelle ein spielfeld
         document.body.appendChild(game); //.
         game.setAttribute("id", "game"); //.
-        for (var i = 0; i <= sequence.length - 1; i++) { //for loop für spielfeld in Array länge
-            var span = document.createElement("span"); //erzeuge neues span element
+        for (let i = 0; i <= sequence.length - 1; i++) { //for loop für spielfeld in Array länge
+            let span = document.createElement("span"); //erzeuge neues span element
             game.appendChild(span); //verschachtle das das span element in das spielfeld
             span.classList.add("card"); //gebe vergebe die klasse card
             span.setAttribute("id", "span" + i); //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
@@ -132,30 +133,27 @@ var memory;
         setTimeout(hidecards, sequence.length * 1000); //warte Pro buchstaben des Wortes 1s und springe dann in die hide funktion
     }
     function hidecards() {
-        for (var i = 0; i <= sequence.length - 1; i++) { //forloop zum erneut durch die spans durch zu gehen
-            var ausgewaehlte = document.querySelector("span#span" + i + ".card"); //geh nach der erstellten id durch
+        for (let i = 0; i <= sequence.length - 1; i++) { //forloop zum erneut durch die spans durch zu gehen
+            let ausgewaehlte = document.querySelector("span#span" + i + ".card"); //geh nach der erstellten id durch
             //console.log(ausgewaehlte);
             ausgewaehlte.style.fontSize = "0px"; //verstecke die beschriftung in dem sie auf 0px gesetzt wird
         }
-        var clock = document.createElement("p"); //erzeuge neues p element
+        let clock = document.createElement("p"); //erzeuge neues p element
         document.getElementById("game").prepend(clock); //verschachtle das das span element in das spielfeld
         clock.setAttribute("id", "clock"); //erzeuge eine eine id für die unterschiedlichen Felder und vergebe ihr unten die passenden Atribute
         document.getElementById("clock").innerText = timevar.toString() + "s";
         setInterval(UpdateTime, 1000);
-        var card = document.querySelectorAll("span.card");
-        var _loop_1 = function (index) {
+        let card = document.querySelectorAll("span.card");
+        for (let index = 0; index < card.length; index++) {
             selection = index;
             card[index].addEventListener("click", function () {
                 turncard(index);
             }, false);
-        };
-        for (var index = 0; index < card.length; index++) {
-            _loop_1(index);
         }
     }
     function hidecardsonly() {
-        for (var i = 0; i <= sequence.length - 1; i++) { //forloop zum erneut durch die spans durch zu gehen
-            var ausgewaehlte = document.querySelector("span#span" + i + ".card"); //geh nach der erstellten id durch
+        for (let i = 0; i <= sequence.length - 1; i++) { //forloop zum erneut durch die spans durch zu gehen
+            let ausgewaehlte = document.querySelector("span#span" + i + ".card"); //geh nach der erstellten id durch
             //console.log(ausgewaehlte);
             ausgewaehlte.style.fontSize = "0px"; //verstecke die beschriftung in dem sie auf 0px gesetzt wird
             counter = 0;
@@ -176,4 +174,3 @@ var memory;
 //let codeword: string = prompt("Please enter your name", "EIA-2-stinkt");
 //let chars: string[] = codeword.split("");
 //console.log(chars);
-//# sourceMappingURL=memory.js.map

@@ -1,12 +1,13 @@
+"use strict";
 var Boxes;
 (function (Boxes) {
-    var n = 5;
-    var color;
-    var x = 0;
-    var y = 0;
+    let n = 5;
+    let color;
+    let x = 0;
+    let y = 0;
     window.addEventListener("load", function () {
-        for (var i = 0; i < n; i++) { //n=5 fahre die funktion 6 mal durch
-            y += (i == 2) ? 20 : 50; //wenn i größer als 2 -->evt vergessen als 20 und 50 
+        for (let i = 0; i < n; i++) { //n=5 fahre die funktion 5 mal durch
+            y += (i == 2) ? 20 : 50; //wenn i = 2 -->evt vergessen als 20 und 50 
             x = (x + 170) % 400;
             switch (i) {
                 case 0: //in falle I=0
@@ -17,12 +18,11 @@ var Boxes;
                     color = "#00ff00"; //Grün
                     break; //springe aus der switch case raus 
                 case 3: //Fall I=3
-                    continue; //LUL was zur hölle ist das für ein case, das ist das unnötigste was ich jemals gesehen hab
-                default:
+                    continue; //Debugger: springt wieder nach oben
+                default: //Debugger: default wird aufgerufen wenn fall I = 2  
                     color = "#0000ff"; //Blau
             }
-            for (var _i = 0, _a = ["big", "medium", "small"]; _i < _a.length; _i++) { //
-                var size = _a[_i];
+            for (let size of ["big", "medium", "small"]) { //
                 createBox(color, x, y, size);
                 if (i == 4)
                     break;
@@ -30,7 +30,7 @@ var Boxes;
         }
     });
     function createBox(_color, _x, _y, _size) {
-        var div = document.createElement("div");
+        let div = document.createElement("div");
         document.body.appendChild(div);
         div.classList.add(_size);
         div.style.backgroundColor = _color; //erstze farbe
@@ -38,4 +38,3 @@ var Boxes;
         div.style.top = _y + "px"; //verkette neues y mit px 
     }
 })(Boxes || (Boxes = {}));
-//# sourceMappingURL=Boxes.js.map
