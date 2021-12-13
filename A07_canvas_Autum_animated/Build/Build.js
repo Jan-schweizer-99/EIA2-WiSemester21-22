@@ -817,7 +817,7 @@ var canvas_Autum_animated;
         }
         draw() {
             canvas_Autum_animated.crc2.translate(this.position.x, this.position.y); //erst verschieben
-            canvas_Autum_animated.crc2.scale(this.scale, this.scale); //scale
+            canvas_Autum_animated.crc2.scale(this.scale * 5, this.scale * 5); //scale
             canvas_Autum_animated.crc2.beginPath();
             canvas_Autum_animated.crc2.fillStyle = "rgb(83, 38, 16)";
             canvas_Autum_animated.crc2.lineWidth = 0.070004;

@@ -27,7 +27,7 @@ namespace canvas_Autum_animated {
 
         draw(): void {
             crc2.translate(this.position.x, this.position.y); //erst verschieben
-            crc2.scale(this.scale, this.scale);   //scale
+            crc2.scale(this.scale * 5 , this.scale * 5 );   //scale
 
             crc2.beginPath();
             crc2.fillStyle = "rgb(83, 38, 16)";
