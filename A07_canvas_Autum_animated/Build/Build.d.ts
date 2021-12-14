@@ -3,6 +3,12 @@ declare namespace canvas_Autum_animated {
 }
 declare namespace canvas_Autum_animated {
     class Cloud {
+        position: Vector;
+        scale: number;
+        constructor(_scale: number);
+        setPosition(_x: number, _y: number): void;
+        setScale(_scale: number): void;
+        draw(): void;
     }
 }
 declare namespace canvas_Autum_animated {
@@ -32,8 +38,8 @@ declare namespace canvas_Autum_animated {
     function drawbody(_transX: number, _transY: number, _scale: number): void;
     function drawarm(_transX: number, _transY: number, _scale: number): void;
     function drawleg(_transX: number, _transY: number, _scale: number): void;
-    function drawTreewood(_x: number, _y: number, _scale: number): void;
-    function drawcloud(_x: number, _y: number, _scale: number): void;
+    function drawTreewood(): void;
+    function drawcloud(): void;
 }
 declare namespace canvas_Autum_animated {
     class Squirrel {
@@ -62,5 +68,15 @@ declare namespace canvas_Autum_animated {
         set(_x: number, _y: number): void;
         scale(_factor: number): void;
         add(_addend: Vector): void;
+    }
+}
+declare namespace canvas_Autum_animated {
+    class Hill {
+        position: Vector;
+        scale: number;
+        constructor(_scale: number);
+        setPosition(_x: number, _y: number): void;
+        setScale(_scale: number): void;
+        draw(): void;
     }
 }

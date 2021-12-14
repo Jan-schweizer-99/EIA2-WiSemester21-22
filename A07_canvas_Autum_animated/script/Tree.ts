@@ -33,7 +33,7 @@ namespace canvas_Autum_animated {
             crc2.fillStyle = "rgb(83, 38, 16)";
             crc2.lineWidth = 0.070004;
 
-            drawTreewood(0, 0, 5);
+            drawTreewood();
             crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
             for (let i: number = 0; i < 10; i++) {               //draw leave 
                 this.leaf = new Leaf(1 * this.scale, this.type); //leaf with scale, type, color

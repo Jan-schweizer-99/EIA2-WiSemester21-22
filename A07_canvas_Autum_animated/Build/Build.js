@@ -22,6 +22,7 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
         let canvas = document.querySelector("canvas");
         canvas_Autum_animated.crc2 = canvas.getContext("2d");
         let blatt = new canvas_Autum_animated.Leaf(1, 3); //leaf with scale, type, color
+        let berg = new canvas_Autum_animated.Hill(2);
         drawsky(); //draw sky and stars and moon
         for (let i = 0; i < 150; i++) {
             let x = Math.random() * 1920;
@@ -31,10 +32,15 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
         }
         drawmoon();
         for (let i = 0; i < 10; i++) { //draw clouds and hills
-            let x = Math.random() * 1920;
-            let y = Math.random() * 1080 / 2;
-            drawhils(x, y);
-            canvas_Autum_animated.drawcloud(Math.random() * 1920, Math.random() * 300, 5);
+            // let x: number = Math.random() * 1920;
+            // let y: number = Math.random() * 1080 / 2;
+            let hill = new canvas_Autum_animated.Hill(1);
+            hill.setPosition(Math.random() * 1920, Math.random() * 1080 / 2);
+            hill.draw();
+            //drawcloud(Math.random() * 1920, Math.random() * 300, 5);
+            let cloud = new canvas_Autum_animated.Cloud(1);
+            cloud.setPosition(Math.random() * 1920, Math.random() * 300);
+            cloud.draw();
         }
         drawfloor(); //draw grass and floor
         //drawforrest();
@@ -57,6 +63,8 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
         }
         blatt.setPosition(500, 500);
         blatt.draw();
+        berg.setPosition(1080, Math.random() * 1080 / 2);
+        berg.draw();
     }
     function drawforrest() {
         let scalefactor = 0.5;
@@ -78,40 +86,6 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
         canvas_Autum_animated.drawarm(_transX, _transY, _scale);
         canvas_Autum_animated.drawleg(_transX, _transY, _scale);
         //drawlegfront
-    }
-    function drawhils(_x, _y) {
-        canvas_Autum_animated.crc2.beginPath();
-        canvas_Autum_animated.crc2.moveTo(_x - 250 + 0, 1080 / 2);
-        canvas_Autum_animated.crc2.lineTo(_x - 250 + 250, _y);
-        canvas_Autum_animated.crc2.lineTo(_x - 250 + 500, 1080 / 2);
-        canvas_Autum_animated.crc2.closePath();
-        canvas_Autum_animated.crc2.shadowColor = "#252850";
-        canvas_Autum_animated.crc2.shadowBlur = 120;
-        canvas_Autum_animated.crc2.strokeStyle = "grey";
-        canvas_Autum_animated.crc2.lineWidth = 5;
-        canvas_Autum_animated.crc2.fillStyle = "#6b695f";
-        canvas_Autum_animated.crc2.fill();
-        canvas_Autum_animated.crc2.stroke();
-        canvas_Autum_animated.crc2.shadowColor = "#FFFFFF00";
-        canvas_Autum_animated.crc2.shadowBlur = 0;
-        if (_y <= 300) {
-            canvas_Autum_animated.crc2.beginPath();
-            canvas_Autum_animated.crc2.moveTo(_x + 125 - 250, 1080 / 4 + _y / 2);
-            canvas_Autum_animated.crc2.lineTo(_x + 250 - 250, _y);
-            canvas_Autum_animated.crc2.lineTo(_x + 375 - 250, 1080 / 4 + _y / 2);
-            canvas_Autum_animated.crc2.lineTo(_x + 325 - 250, 1080 / 4 + 50 + _y / 2);
-            canvas_Autum_animated.crc2.lineTo(_x + 250 - 250, 1080 / 4 - 50 + _y / 2);
-            canvas_Autum_animated.crc2.closePath();
-            canvas_Autum_animated.crc2.strokeStyle = "grey";
-            canvas_Autum_animated.crc2.lineWidth = 5;
-            canvas_Autum_animated.crc2.fillStyle = "white";
-            canvas_Autum_animated.crc2.stroke();
-            canvas_Autum_animated.crc2.fill();
-        }
-        canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
-        canvas_Autum_animated.crc2.strokeStyle = "black";
-        canvas_Autum_animated.crc2.fillStyle = "white";
-        canvas_Autum_animated.crc2.lineWidth = 1;
     }
     function drawsky() {
         canvas_Autum_animated.crc2.beginPath();
@@ -177,6 +151,28 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
 var canvas_Autum_animated;
 (function (canvas_Autum_animated) {
     class Cloud {
+        position;
+        scale;
+        constructor(_scale) {
+            this.position = new canvas_Autum_animated.Vector(0, 0);
+            this.setScale(_scale);
+        }
+        setPosition(_x, _y) {
+            this.position.x = _x;
+            this.position.y = _y;
+        }
+        setScale(_scale) {
+            this.scale = _scale;
+        }
+        draw() {
+            canvas_Autum_animated.crc2.translate(this.position.x, this.position.y); //erst verschieben
+            canvas_Autum_animated.crc2.scale(this.scale * 5, this.scale * 5); //scale
+            canvas_Autum_animated.crc2.beginPath();
+            canvas_Autum_animated.drawcloud();
+            canvas_Autum_animated.crc2.fill();
+            canvas_Autum_animated.crc2.stroke();
+            canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
+        }
     }
     canvas_Autum_animated.Cloud = Cloud;
 })(canvas_Autum_animated || (canvas_Autum_animated = {}));
@@ -534,7 +530,7 @@ var canvas_Autum_animated;
         canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0);
     }
     canvas_Autum_animated.drawleg = drawleg;
-    function drawTreewood(_x, _y, _scale) {
+    function drawTreewood() {
         canvas_Autum_animated.crc2.moveTo(-24.478345, -53.935685);
         canvas_Autum_animated.crc2.bezierCurveTo(-25.795416, -54.370831, -27.030138, -55.076386, -28.176666, -55.781942);
         canvas_Autum_animated.crc2.bezierCurveTo(-26.941944, -54.899997, -25.530833, -54.106247, -24.119722, -53.400691);
@@ -750,10 +746,7 @@ var canvas_Autum_animated;
         canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
     }
     canvas_Autum_animated.drawTreewood = drawTreewood;
-    function drawcloud(_x, _y, _scale) {
-        canvas_Autum_animated.crc2.translate(_x, _y); //erst verschieben
-        canvas_Autum_animated.crc2.scale(_scale, _scale); //scale
-        canvas_Autum_animated.crc2.beginPath();
+    function drawcloud() {
         canvas_Autum_animated.crc2.moveTo(29.942321, -5.599199);
         canvas_Autum_animated.crc2.bezierCurveTo(32.323571, -6.481144, 33.734681, -7.539477, 33.734681, -8.774199);
         canvas_Autum_animated.crc2.bezierCurveTo(33.734681, -11.243643, 27.296487, -13.360310, 19.447181, -13.360310);
@@ -779,9 +772,6 @@ var canvas_Autum_animated;
         canvas_Autum_animated.crc2.bezierCurveTo(19.447185, 13.715381, 20.858295, 13.803575, 22.269408, 13.803575);
         canvas_Autum_animated.crc2.bezierCurveTo(30.736075, 13.803575, 37.527045, 9.129268, 37.527045, 3.396630);
         canvas_Autum_animated.crc2.bezierCurveTo(37.527045, -0.483925, 34.528435, -3.835314, 29.942325, -5.599203);
-        canvas_Autum_animated.crc2.fill();
-        canvas_Autum_animated.crc2.stroke();
-        canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
     }
     canvas_Autum_animated.drawcloud = drawcloud;
 })(canvas_Autum_animated || (canvas_Autum_animated = {}));
@@ -821,7 +811,7 @@ var canvas_Autum_animated;
             canvas_Autum_animated.crc2.beginPath();
             canvas_Autum_animated.crc2.fillStyle = "rgb(83, 38, 16)";
             canvas_Autum_animated.crc2.lineWidth = 0.070004;
-            canvas_Autum_animated.drawTreewood(0, 0, 5);
+            canvas_Autum_animated.drawTreewood();
             canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
             for (let i = 0; i < 10; i++) { //draw leave 
                 this.leaf = new canvas_Autum_animated.Leaf(1 * this.scale, this.type); //leaf with scale, type, color
@@ -858,5 +848,58 @@ var canvas_Autum_animated;
         }
     }
     canvas_Autum_animated.Vector = Vector;
+})(canvas_Autum_animated || (canvas_Autum_animated = {}));
+var canvas_Autum_animated;
+(function (canvas_Autum_animated) {
+    class Hill {
+        position;
+        scale;
+        constructor(_scale) {
+            this.position = new canvas_Autum_animated.Vector(0, 0);
+            this.setScale(_scale);
+        }
+        setPosition(_x, _y) {
+            this.position.x = _x;
+            this.position.y = _y;
+        }
+        setScale(_scale) {
+            this.scale = _scale;
+        }
+        draw() {
+            canvas_Autum_animated.crc2.beginPath();
+            canvas_Autum_animated.crc2.moveTo(this.position.x - 250 + 0, 1080 / 2);
+            canvas_Autum_animated.crc2.lineTo(this.position.x - 250 + 250, this.position.y);
+            canvas_Autum_animated.crc2.lineTo(this.position.x - 250 + 500, 1080 / 2);
+            canvas_Autum_animated.crc2.closePath();
+            canvas_Autum_animated.crc2.shadowColor = "#252850";
+            canvas_Autum_animated.crc2.shadowBlur = 120;
+            canvas_Autum_animated.crc2.strokeStyle = "grey";
+            canvas_Autum_animated.crc2.lineWidth = 5;
+            canvas_Autum_animated.crc2.fillStyle = "#6b695f";
+            canvas_Autum_animated.crc2.fill();
+            canvas_Autum_animated.crc2.stroke();
+            canvas_Autum_animated.crc2.shadowColor = "#FFFFFF00";
+            canvas_Autum_animated.crc2.shadowBlur = 0;
+            if (this.position.y <= 300) {
+                canvas_Autum_animated.crc2.beginPath();
+                canvas_Autum_animated.crc2.moveTo(this.position.x + 125 - 250, 1080 / 4 + this.position.y / 2);
+                canvas_Autum_animated.crc2.lineTo(this.position.x + 250 - 250, this.position.y);
+                canvas_Autum_animated.crc2.lineTo(this.position.x + 375 - 250, 1080 / 4 + this.position.y / 2);
+                canvas_Autum_animated.crc2.lineTo(this.position.x + 325 - 250, 1080 / 4 + 50 + this.position.y / 2);
+                canvas_Autum_animated.crc2.lineTo(this.position.x + 250 - 250, 1080 / 4 - 50 + this.position.y / 2);
+                canvas_Autum_animated.crc2.closePath();
+                canvas_Autum_animated.crc2.strokeStyle = "grey";
+                canvas_Autum_animated.crc2.lineWidth = 5;
+                canvas_Autum_animated.crc2.fillStyle = "white";
+                canvas_Autum_animated.crc2.stroke();
+                canvas_Autum_animated.crc2.fill();
+            }
+            canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
+            canvas_Autum_animated.crc2.strokeStyle = "black";
+            canvas_Autum_animated.crc2.fillStyle = "white";
+            canvas_Autum_animated.crc2.lineWidth = 1;
+        }
+    }
+    canvas_Autum_animated.Hill = Hill;
 })(canvas_Autum_animated || (canvas_Autum_animated = {}));
 //# sourceMappingURL=Build.js.map

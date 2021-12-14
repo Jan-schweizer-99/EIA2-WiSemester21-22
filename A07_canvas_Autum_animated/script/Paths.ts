@@ -294,7 +294,7 @@ namespace canvas_Autum_animated {
         crc2.restore();
         crc2.setTransform(1, 0, 0, 1, 0, 0);
     }
-    export function drawTreewood(_x: number, _y: number, _scale: number): void {
+    export function drawTreewood(): void {
 
         crc2.moveTo(-24.478345, -53.935685);
         crc2.bezierCurveTo(-25.795416, -54.370831, -27.030138, -55.076386, -28.176666, -55.781942);
@@ -511,10 +511,7 @@ namespace canvas_Autum_animated {
 
         crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
     }
-    export function drawcloud(_x: number, _y: number, _scale: number): void {
-        crc2.translate(_x, _y); //erst verschieben
-        crc2.scale(_scale, _scale);   //scale
-        crc2.beginPath();
+    export function drawcloud(): void {
         crc2.moveTo(29.942321, -5.599199);
         crc2.bezierCurveTo(32.323571, -6.481144, 33.734681, -7.539477, 33.734681, -8.774199);
         crc2.bezierCurveTo(33.734681, -11.243643, 27.296487, -13.360310, 19.447181, -13.360310);
@@ -540,8 +537,5 @@ namespace canvas_Autum_animated {
         crc2.bezierCurveTo(19.447185, 13.715381, 20.858295, 13.803575, 22.269408, 13.803575);
         crc2.bezierCurveTo(30.736075, 13.803575, 37.527045, 9.129268, 37.527045, 3.396630);
         crc2.bezierCurveTo(37.527045, -0.483925, 34.528435, -3.835314, 29.942325, -5.599203);
-        crc2.fill();
-        crc2.stroke();
-        crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
     }
 }

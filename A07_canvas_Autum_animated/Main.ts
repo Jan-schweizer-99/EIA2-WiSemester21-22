@@ -17,6 +17,7 @@ namespace canvas_Autum_animated {
     let canvas: HTMLCanvasElement = document.querySelector("canvas")!;
     crc2 = canvas.getContext("2d")!;
     let blatt: Leaf = new Leaf(1, 3); //leaf with scale, type, color
+    let berg: Hill = new Hill(2);
 
     drawsky();                                  //draw sky and stars and moon
     for (let i: number = 0; i < 150; i++) {
@@ -29,10 +30,15 @@ namespace canvas_Autum_animated {
 
 
     for (let i: number = 0; i < 10; i++) {                      //draw clouds and hills
-      let x: number = Math.random() * 1920;
-      let y: number = Math.random() * 1080 / 2;
-      drawhils(x, y);
-      drawcloud(Math.random() * 1920, Math.random() * 300, 5);
+      // let x: number = Math.random() * 1920;
+      // let y: number = Math.random() * 1080 / 2;
+      let hill: Hill = new Hill(1);
+      hill.setPosition(Math.random() * 1920, Math.random() * 1080 / 2);
+      hill.draw();
+      //drawcloud(Math.random() * 1920, Math.random() * 300, 5);
+      let cloud: Cloud = new Cloud(1);
+      cloud.setPosition(Math.random() * 1920, Math.random() * 300);
+      cloud.draw();
     }
 
 
@@ -63,7 +69,8 @@ namespace canvas_Autum_animated {
 
     blatt.setPosition(500, 500);
     blatt.draw();
-    
+    berg.setPosition(1080, Math.random() * 1080 / 2 );
+    berg.draw();
 
   }
   function drawforrest(): void {
@@ -88,46 +95,6 @@ namespace canvas_Autum_animated {
     //drawlegfront
 
   }
-
-  function drawhils(_x: number, _y: number): void {    //blauer Abendhintergrund
-    crc2.beginPath();
-    crc2.moveTo(_x - 250 + 0, 1080 / 2);
-    crc2.lineTo(_x - 250 + 250, _y);
-    crc2.lineTo(_x - 250 + 500, 1080 / 2);
-    crc2.closePath();
-
-    crc2.shadowColor = "#252850";
-    crc2.shadowBlur = 120;
-    crc2.strokeStyle = "grey";
-    crc2.lineWidth = 5;
-    crc2.fillStyle = "#6b695f";
-    crc2.fill();
-    crc2.stroke();
-    crc2.shadowColor = "#FFFFFF00";
-    crc2.shadowBlur = 0;
-
-    if (_y <= 300) {
-      crc2.beginPath();
-      crc2.moveTo(_x + 125 - 250, 1080 / 4 + _y / 2);
-      crc2.lineTo(_x + 250 - 250, _y);
-      crc2.lineTo(_x + 375 - 250, 1080 / 4 + _y / 2);
-      crc2.lineTo(_x + 325 - 250, 1080 / 4 + 50 + _y / 2);
-      crc2.lineTo(_x + 250 - 250, 1080 / 4 - 50 + _y / 2);
-      crc2.closePath();
-
-      crc2.strokeStyle = "grey";
-      crc2.lineWidth = 5;
-      crc2.fillStyle = "white";
-      crc2.stroke();
-      crc2.fill();
-    }
-    crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
-    crc2.strokeStyle = "black";
-    crc2.fillStyle = "white";
-    crc2.lineWidth = 1;
-
-  }
-
   function drawsky(): void {    //blauer Abendhintergrund
     crc2.beginPath();
     crc2.moveTo(0, 0);
