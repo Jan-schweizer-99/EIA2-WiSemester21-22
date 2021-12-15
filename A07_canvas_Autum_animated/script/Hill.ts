@@ -12,6 +12,10 @@ namespace canvas_Autum_animated {
             this.position.x = _x;
             this.position.y = _y;
         }
+        setrandomPosition(_x: number, _y: number): void {
+            this.position.x = _x;
+            this.position.y = _y;
+        }
         setScale(_scale: number): void {
             this.scale = _scale;
         }

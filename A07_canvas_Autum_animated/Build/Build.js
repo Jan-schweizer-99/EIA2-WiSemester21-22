@@ -17,45 +17,37 @@ Quellen: Artur Erlich (MIB) hat mir empfolen ein skript zu schreiben damit ich d
 vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projekt. Es befindet sich im Ordner OriginMover im projekt canvas_atum
 */
 (function (canvas_Autum_animated) {
+    let hill = [];
+    let cloud = [];
+    let tree = [];
+    let sky;
+    //let sky: Sky = new Sky(2);
     window.addEventListener("load", hndLoad);
     function hndLoad(_event) {
         let canvas = document.querySelector("canvas");
         canvas_Autum_animated.crc2 = canvas.getContext("2d");
         let blatt = new canvas_Autum_animated.Leaf(1, 3); //leaf with scale, type, color
-        let berg = new canvas_Autum_animated.Hill(2);
-        drawsky(); //draw sky and stars and moon
-        for (let i = 0; i < 150; i++) {
-            let x = Math.random() * 1920;
-            let y = Math.random() * 540;
-            let radius = Math.random() * 3;
-            drawstars(x, y, radius);
-        }
+        let tree = new canvas_Autum_animated.Tree(0.5, Math.floor(Math.random() * 3) + 1);
+        sky = new canvas_Autum_animated.Sky(2);
+        sky.setStars();
         drawmoon();
         for (let i = 0; i < 10; i++) { //draw clouds and hills
-            // let x: number = Math.random() * 1920;
-            // let y: number = Math.random() * 1080 / 2;
-            let hill = new canvas_Autum_animated.Hill(1);
-            hill.setPosition(Math.random() * 1920, Math.random() * 1080 / 2);
-            hill.draw();
-            //drawcloud(Math.random() * 1920, Math.random() * 300, 5);
-            let cloud = new canvas_Autum_animated.Cloud(1);
-            cloud.setPosition(Math.random() * 1920, Math.random() * 300);
-            cloud.draw();
+            hill[i] = new canvas_Autum_animated.Hill(1); //erzeuge hills mit indexwerten 1-10
+            hill[i].setPosition(Math.random() * 1920, Math.random() * 1080 / 2);
+            hill[i].draw();
+            cloud[i] = new canvas_Autum_animated.Cloud(1);
+            cloud[i].setPosition(Math.random() * 1920, Math.random() * 300);
+            cloud[i].draw();
         }
         drawfloor(); //draw grass and floor
         //drawforrest();
-        for (let i = 0; i < 10000; i++) {
-            let x = Math.random() * 1920;
-            let y = Math.random() * 1080 / 2;
-            drawgrass(x, y);
-        }
         for (let i = 0; i < 4; i++) { //draw campfire
             let transX = Math.random() * 1920 / 2 + 20;
             let transY = 500 - (Math.random() * 120);
             let scale = 2;
             drawsquirrel(transX, transY, scale);
         }
-        drawforrest(); //draw trees background
+        tree.drawForrest(); //draw trees background
         for (let i = 0; i < 10; i++) { //draw blätter im Vordergrund
             // drawleave1(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
             // drawleave2(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
@@ -63,21 +55,23 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
         }
         blatt.setPosition(500, 500);
         blatt.draw();
-        berg.setPosition(1080, Math.random() * 1080 / 2);
-        berg.draw();
+        setInterval(update, 10);
+        update();
     }
-    function drawforrest() {
-        let scalefactor = 0.5;
-        let layer = 600;
-        for (let index = 0; index <= 2; index++) { //draw forrest
-            for (let i = 0; i < 5; i++) {
-                let bauum = new canvas_Autum_animated.Tree(scalefactor, Math.floor(Math.random() * 3) + 1); //musste blatt 3 wegen der performance nehmen
-                bauum.setPosition(Math.random() * 1920, layer);
-                bauum.draw();
+    function update() {
+        sky.draw();
+        //drawstars(Math.random() * 1920, Math.random() * 1080, 5);
+        drawfloor();
+        drawmoon();
+        for (let i = 0; i < hill.length; i++) {
+            hill[i].draw();
+            cloud[i].slideright();
+            if (cloud[i].position.x > 2120) {
+                cloud[i].position.x = -200;
             }
-            scalefactor += 0.1;
-            layer += 20;
+            cloud[i].draw();
         }
+        tree[1].drawForrest();
     }
     function drawsquirrel(_transX, _transY, _scale) {
         canvas_Autum_animated.drawarm(_transX, _transY, _scale);
@@ -86,16 +80,6 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
         canvas_Autum_animated.drawarm(_transX, _transY, _scale);
         canvas_Autum_animated.drawleg(_transX, _transY, _scale);
         //drawlegfront
-    }
-    function drawsky() {
-        canvas_Autum_animated.crc2.beginPath();
-        canvas_Autum_animated.crc2.moveTo(0, 0);
-        canvas_Autum_animated.crc2.lineTo(1920, 0);
-        canvas_Autum_animated.crc2.lineTo(1920, 1080);
-        canvas_Autum_animated.crc2.lineTo(0, 1080);
-        canvas_Autum_animated.crc2.closePath();
-        canvas_Autum_animated.crc2.fillStyle = "#252850";
-        canvas_Autum_animated.crc2.fill();
     }
     function drawfloor() {
         canvas_Autum_animated.crc2.beginPath();
@@ -106,21 +90,6 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
         canvas_Autum_animated.crc2.closePath();
         canvas_Autum_animated.crc2.fillStyle = "#35682d";
         canvas_Autum_animated.crc2.fill();
-    }
-    function drawstars(_x, _y, _radius) {
-        canvas_Autum_animated.crc2.beginPath();
-        canvas_Autum_animated.crc2.moveTo(_x, _y);
-        canvas_Autum_animated.crc2.arc(_x, _y, _radius, 0, 2 * Math.PI, false);
-        //crc2.lineTo(_x, _y + 70);
-        //crc2.lineTo(_x + 80, _y + 35);
-        canvas_Autum_animated.crc2.closePath();
-        canvas_Autum_animated.crc2.shadowColor = "white";
-        canvas_Autum_animated.crc2.shadowBlur = 15;
-        canvas_Autum_animated.crc2.fillStyle = "#FFFFFFFF";
-        canvas_Autum_animated.crc2.fill();
-        canvas_Autum_animated.crc2.strokeRect(0, 0, 0, 0);
-        canvas_Autum_animated.crc2.shadowColor = "#FFFFFF00";
-        canvas_Autum_animated.crc2.shadowBlur = 0;
     }
     function drawmoon() {
         canvas_Autum_animated.crc2.beginPath();
@@ -136,16 +105,6 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
         canvas_Autum_animated.crc2.fill();
         canvas_Autum_animated.crc2.shadowColor = "#FFFFFF00";
         canvas_Autum_animated.crc2.shadowBlur = 0;
-    }
-    function drawgrass(_x, _y) {
-        let grassdirection = Math.random() * 20;
-        canvas_Autum_animated.crc2.beginPath();
-        canvas_Autum_animated.crc2.moveTo(_x, _y + 1080 / 2);
-        canvas_Autum_animated.crc2.lineTo(_x, _y + grassdirection + 1080 / 2 + 25);
-        canvas_Autum_animated.crc2.closePath();
-        canvas_Autum_animated.crc2.strokeStyle = "green";
-        canvas_Autum_animated.crc2.lineWidth = 2;
-        canvas_Autum_animated.crc2.stroke();
     }
 })(canvas_Autum_animated || (canvas_Autum_animated = {}));
 var canvas_Autum_animated;
@@ -164,6 +123,9 @@ var canvas_Autum_animated;
         setScale(_scale) {
             this.scale = _scale;
         }
+        slideright() {
+            this.position.x++;
+        }
         draw() {
             canvas_Autum_animated.crc2.translate(this.position.x, this.position.y); //erst verschieben
             canvas_Autum_animated.crc2.scale(this.scale * 5, this.scale * 5); //scale
@@ -175,6 +137,63 @@ var canvas_Autum_animated;
         }
     }
     canvas_Autum_animated.Cloud = Cloud;
+})(canvas_Autum_animated || (canvas_Autum_animated = {}));
+var canvas_Autum_animated;
+(function (canvas_Autum_animated) {
+    class Hill {
+        position;
+        scale;
+        constructor(_scale) {
+            this.position = new canvas_Autum_animated.Vector(0, 0);
+            this.setScale(_scale);
+        }
+        setPosition(_x, _y) {
+            this.position.x = _x;
+            this.position.y = _y;
+        }
+        setrandomPosition(_x, _y) {
+            this.position.x = _x;
+            this.position.y = _y;
+        }
+        setScale(_scale) {
+            this.scale = _scale;
+        }
+        draw() {
+            canvas_Autum_animated.crc2.beginPath();
+            canvas_Autum_animated.crc2.moveTo(this.position.x - 250 + 0, 1080 / 2);
+            canvas_Autum_animated.crc2.lineTo(this.position.x - 250 + 250, this.position.y);
+            canvas_Autum_animated.crc2.lineTo(this.position.x - 250 + 500, 1080 / 2);
+            canvas_Autum_animated.crc2.closePath();
+            canvas_Autum_animated.crc2.shadowColor = "#252850";
+            canvas_Autum_animated.crc2.shadowBlur = 120;
+            canvas_Autum_animated.crc2.strokeStyle = "grey";
+            canvas_Autum_animated.crc2.lineWidth = 5;
+            canvas_Autum_animated.crc2.fillStyle = "#6b695f";
+            canvas_Autum_animated.crc2.fill();
+            canvas_Autum_animated.crc2.stroke();
+            canvas_Autum_animated.crc2.shadowColor = "#FFFFFF00";
+            canvas_Autum_animated.crc2.shadowBlur = 0;
+            if (this.position.y <= 300) {
+                canvas_Autum_animated.crc2.beginPath();
+                canvas_Autum_animated.crc2.moveTo(this.position.x + 125 - 250, 1080 / 4 + this.position.y / 2);
+                canvas_Autum_animated.crc2.lineTo(this.position.x + 250 - 250, this.position.y);
+                canvas_Autum_animated.crc2.lineTo(this.position.x + 375 - 250, 1080 / 4 + this.position.y / 2);
+                canvas_Autum_animated.crc2.lineTo(this.position.x + 325 - 250, 1080 / 4 + 50 + this.position.y / 2);
+                canvas_Autum_animated.crc2.lineTo(this.position.x + 250 - 250, 1080 / 4 - 50 + this.position.y / 2);
+                canvas_Autum_animated.crc2.closePath();
+                canvas_Autum_animated.crc2.strokeStyle = "grey";
+                canvas_Autum_animated.crc2.lineWidth = 5;
+                canvas_Autum_animated.crc2.fillStyle = "white";
+                canvas_Autum_animated.crc2.stroke();
+                canvas_Autum_animated.crc2.fill();
+            }
+            canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
+            canvas_Autum_animated.crc2.strokeStyle = "black";
+            canvas_Autum_animated.crc2.fillStyle = "white";
+            canvas_Autum_animated.crc2.lineWidth = 1;
+        }
+    }
+    canvas_Autum_animated.Hill = Hill;
 })(canvas_Autum_animated || (canvas_Autum_animated = {}));
 var canvas_Autum_animated;
 (function (canvas_Autum_animated) {
@@ -790,6 +809,7 @@ var canvas_Autum_animated;
         color;
         leaf;
         origin;
+        tree = [];
         constructor(_scale, _type) {
             this.position = new canvas_Autum_animated.Vector(0, 0);
             this.setType(_type);
@@ -823,6 +843,19 @@ var canvas_Autum_animated;
                 // drawleave1(this.position.x, this.position.y - (142 * 1), 0.5 * 1, Math.random() * 200, 0);
             }
         }
+        drawForrest() {
+            let scalefactor = 0.5;
+            let layer = 600;
+            for (let index = 0; index <= 2; index++) { //draw forrest
+                for (let i = 0; i < 5; i++) {
+                    let treeForrest = new Tree(scalefactor, Math.floor(Math.random() * 3) + 1); //musste blatt 3 wegen der performance nehmen
+                    treeForrest.setPosition(Math.random() * 1920, layer);
+                    treeForrest.draw();
+                }
+                scalefactor += 0.1;
+                layer += 20;
+            }
+        }
     }
     canvas_Autum_animated.Tree = Tree;
 })(canvas_Autum_animated || (canvas_Autum_animated = {}));
@@ -851,7 +884,52 @@ var canvas_Autum_animated;
 })(canvas_Autum_animated || (canvas_Autum_animated = {}));
 var canvas_Autum_animated;
 (function (canvas_Autum_animated) {
-    class Hill {
+    class Sky {
+        position;
+        scale;
+        star = [];
+        constructor(_scale) {
+            this.position = new canvas_Autum_animated.Vector(0, 0);
+            this.setScale(_scale);
+            //this.setStars();
+        }
+        setPosition(_x, _y) {
+            this.position.x = _x;
+            this.position.y = _y;
+        }
+        setScale(_scale) {
+            this.scale = _scale;
+        }
+        slideright() {
+            this.position.x++;
+        }
+        setStars() {
+            for (let i = 0; i < 150; i++) {
+                this.star[i] = new canvas_Autum_animated.Star(1);
+                this.star[i].position.x = Math.random() * 1920;
+                this.star[i].position.y = Math.random() * 540;
+                this.star[i].scale = Math.random() * 3;
+            }
+        }
+        draw() {
+            canvas_Autum_animated.crc2.beginPath();
+            canvas_Autum_animated.crc2.moveTo(0, 0);
+            canvas_Autum_animated.crc2.lineTo(1920, 0);
+            canvas_Autum_animated.crc2.lineTo(1920, 1080);
+            canvas_Autum_animated.crc2.lineTo(0, 1080);
+            canvas_Autum_animated.crc2.closePath();
+            canvas_Autum_animated.crc2.fillStyle = "#252850";
+            canvas_Autum_animated.crc2.fill();
+            for (let i = 0; i < 150; i++) {
+                this.star[i].draw();
+            }
+        }
+    }
+    canvas_Autum_animated.Sky = Sky;
+})(canvas_Autum_animated || (canvas_Autum_animated = {}));
+var canvas_Autum_animated;
+(function (canvas_Autum_animated) {
+    class Star {
         position;
         scale;
         constructor(_scale) {
@@ -865,41 +943,26 @@ var canvas_Autum_animated;
         setScale(_scale) {
             this.scale = _scale;
         }
+        slideright() {
+            this.position.x++;
+        }
         draw() {
             canvas_Autum_animated.crc2.beginPath();
-            canvas_Autum_animated.crc2.moveTo(this.position.x - 250 + 0, 1080 / 2);
-            canvas_Autum_animated.crc2.lineTo(this.position.x - 250 + 250, this.position.y);
-            canvas_Autum_animated.crc2.lineTo(this.position.x - 250 + 500, 1080 / 2);
+            canvas_Autum_animated.crc2.moveTo(this.position.x, this.position.y);
+            canvas_Autum_animated.crc2.arc(this.position.x, this.position.y, this.scale, 0, 2 * Math.PI, false);
+            //crc2.lineTo(_x, _y + 70);
+            //crc2.lineTo(_x + 80, _y + 35);
             canvas_Autum_animated.crc2.closePath();
-            canvas_Autum_animated.crc2.shadowColor = "#252850";
-            canvas_Autum_animated.crc2.shadowBlur = 120;
-            canvas_Autum_animated.crc2.strokeStyle = "grey";
-            canvas_Autum_animated.crc2.lineWidth = 5;
-            canvas_Autum_animated.crc2.fillStyle = "#6b695f";
+            canvas_Autum_animated.crc2.shadowColor = "white";
+            canvas_Autum_animated.crc2.shadowBlur = 15;
+            canvas_Autum_animated.crc2.fillStyle = "#FFFFFFFF";
             canvas_Autum_animated.crc2.fill();
-            canvas_Autum_animated.crc2.stroke();
+            canvas_Autum_animated.crc2.strokeRect(0, 0, 0, 0);
             canvas_Autum_animated.crc2.shadowColor = "#FFFFFF00";
             canvas_Autum_animated.crc2.shadowBlur = 0;
-            if (this.position.y <= 300) {
-                canvas_Autum_animated.crc2.beginPath();
-                canvas_Autum_animated.crc2.moveTo(this.position.x + 125 - 250, 1080 / 4 + this.position.y / 2);
-                canvas_Autum_animated.crc2.lineTo(this.position.x + 250 - 250, this.position.y);
-                canvas_Autum_animated.crc2.lineTo(this.position.x + 375 - 250, 1080 / 4 + this.position.y / 2);
-                canvas_Autum_animated.crc2.lineTo(this.position.x + 325 - 250, 1080 / 4 + 50 + this.position.y / 2);
-                canvas_Autum_animated.crc2.lineTo(this.position.x + 250 - 250, 1080 / 4 - 50 + this.position.y / 2);
-                canvas_Autum_animated.crc2.closePath();
-                canvas_Autum_animated.crc2.strokeStyle = "grey";
-                canvas_Autum_animated.crc2.lineWidth = 5;
-                canvas_Autum_animated.crc2.fillStyle = "white";
-                canvas_Autum_animated.crc2.stroke();
-                canvas_Autum_animated.crc2.fill();
-            }
             canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
-            canvas_Autum_animated.crc2.strokeStyle = "black";
-            canvas_Autum_animated.crc2.fillStyle = "white";
-            canvas_Autum_animated.crc2.lineWidth = 1;
         }
     }
-    canvas_Autum_animated.Hill = Hill;
+    canvas_Autum_animated.Star = Star;
 })(canvas_Autum_animated || (canvas_Autum_animated = {}));
 //# sourceMappingURL=Build.js.map

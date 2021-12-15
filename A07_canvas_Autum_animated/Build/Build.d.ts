@@ -8,6 +8,18 @@ declare namespace canvas_Autum_animated {
         constructor(_scale: number);
         setPosition(_x: number, _y: number): void;
         setScale(_scale: number): void;
+        slideright(): void;
+        draw(): void;
+    }
+}
+declare namespace canvas_Autum_animated {
+    class Hill {
+        position: Vector;
+        scale: number;
+        constructor(_scale: number);
+        setPosition(_x: number, _y: number): void;
+        setrandomPosition(_x: number, _y: number): void;
+        setScale(_scale: number): void;
         draw(): void;
     }
 }
@@ -53,11 +65,13 @@ declare namespace canvas_Autum_animated {
         color: string;
         leaf: Leaf;
         origin: number;
+        tree: Tree[];
         constructor(_scale: number, _type: number);
         setType(_type: number): void;
         setPosition(_x: number, _y: number): void;
         setScale(_scale: number): void;
         draw(): void;
+        drawForrest(): void;
     }
 }
 declare namespace canvas_Autum_animated {
@@ -71,12 +85,26 @@ declare namespace canvas_Autum_animated {
     }
 }
 declare namespace canvas_Autum_animated {
-    class Hill {
+    class Sky {
+        position: Vector;
+        scale: number;
+        star: Star[];
+        constructor(_scale: number);
+        setPosition(_x: number, _y: number): void;
+        setScale(_scale: number): void;
+        slideright(): void;
+        setStars(): void;
+        draw(): void;
+    }
+}
+declare namespace canvas_Autum_animated {
+    class Star {
         position: Vector;
         scale: number;
         constructor(_scale: number);
         setPosition(_x: number, _y: number): void;
         setScale(_scale: number): void;
+        slideright(): void;
         draw(): void;
     }
 }

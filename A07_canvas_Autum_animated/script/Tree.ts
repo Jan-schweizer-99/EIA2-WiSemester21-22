@@ -6,6 +6,8 @@ namespace canvas_Autum_animated {
         color: string;
         leaf: Leaf;
         origin: number;
+        tree: Tree[] = [];
+        
 
         constructor(_scale: number, _type: number) {
             this.position = new Vector(0, 0);
@@ -45,5 +47,18 @@ namespace canvas_Autum_animated {
                 // drawleave1(this.position.x, this.position.y - (142 * 1), 0.5 * 1, Math.random() * 200, 0);
             }
         }
+        drawForrest(): void {
+            let scalefactor: number = 0.5;
+            let layer: number = 600;
+            for (let index: number = 0; index <= 2; index++) {    //draw forrest
+              for (let i: number = 0; i < 5; i++) {
+                let treeForrest: Tree = new Tree(scalefactor, Math.floor(Math.random() * 3) + 1);     //musste blatt 3 wegen der performance nehmen
+                treeForrest.setPosition(Math.random() * 1920, layer);
+                treeForrest.draw();
+              }
+              scalefactor += 0.1;
+              layer += 20;
+            }
+          }
     }
 }
