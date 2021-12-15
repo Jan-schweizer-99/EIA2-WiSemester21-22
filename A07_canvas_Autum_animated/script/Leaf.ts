@@ -43,6 +43,11 @@ namespace canvas_Autum_animated {
         setRandomOrigin(): void {                   //function für baumkrone
             this.originx = Math.random() * 130;
         }
+        leafSlide(): void {
+            this.position.x += 2;
+            this.position.y += 2;
+            this.rotation += 0.1;
+        }
 
         draw(): void {
             crc2.translate(this.position.x, this.position.y); //erst verschieben

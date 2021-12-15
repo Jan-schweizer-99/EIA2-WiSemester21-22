@@ -21,6 +21,7 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
     let cloud = [];
     let tree = [];
     let sky;
+    let leaf = [];
     //let sky: Sky = new Sky(2);
     window.addEventListener("load", hndLoad);
     function hndLoad(_event) {
@@ -53,10 +54,13 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
             drawsquirrel(transX, transY, scale);
         }
         //tree[1].drawForrest();                 //draw trees background
-        for (let i = 0; i < 10; i++) { //draw blätter im Vordergrund
+        for (let i = 0; i < 20; i++) { //draw blätter im Vordergrund
             // drawleave1(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
             // drawleave2(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
             // drawleave3(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
+            leaf[i] = new canvas_Autum_animated.Leaf(2, Math.floor(Math.random() * 3) + 1);
+            leaf[i].setRotation(Math.random() * 50);
+            leaf[i].setPosition(Math.random() * 1920, Math.random() * 1920);
         }
         setInterval(update, 10);
         update();
@@ -87,6 +91,14 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
             cloud[i].draw();
         }
         drawForrest(tree);
+        for (let i = 0; i < 100; i++) { //draw blätter im Vordergrund
+            leaf[i].leafSlide();
+            leaf[i].draw();
+            if (leaf[i].position.x > 2200) {
+                leaf[i].position.x = (Math.random() * 1920) - 1000;
+                leaf[i].position.y = -50;
+            }
+        }
     }
     function drawsquirrel(_transX, _transY, _scale) {
         canvas_Autum_animated.drawarm(_transX, _transY, _scale);
@@ -249,6 +261,11 @@ var canvas_Autum_animated;
         setRandomOrigin() {
             this.originx = Math.random() * 130;
         }
+        leafSlide() {
+            this.position.x += 2;
+            this.position.y += 2;
+            this.rotation += 0.1;
+        }
         draw() {
             canvas_Autum_animated.crc2.translate(this.position.x, this.position.y); //erst verschieben
             canvas_Autum_animated.crc2.scale(this.scale, this.scale); //scale
@@ -327,6 +344,7 @@ var canvas_Autum_animated;
         canvas_Autum_animated.crc2.bezierCurveTo(_originX + 10.275352, _originY + -44.314048, _originX + 4.630912, _originY + -13.975160, _originX + 2.073272, _originY + -5.684880);
         canvas_Autum_animated.crc2.bezierCurveTo(_originX + 1.632302, _originY + -2.509880, _originX + 2.778822, _originY + 0.488730, _originX + 1.985072, _originY + 1.458870);
         canvas_Autum_animated.crc2.bezierCurveTo(_originX + 1.103132, _originY + 2.340813, _originX + -2.777428, _originY + 2.869980, _originX + -2.777428, _originY + -0.040437);
+        canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
     }
     canvas_Autum_animated.drawleave4 = drawleave4;
     function drawleave2(_originX, _originY) {

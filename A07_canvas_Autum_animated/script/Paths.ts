@@ -55,6 +55,7 @@ namespace canvas_Autum_animated {
         crc2.bezierCurveTo(_originX + 10.275352, _originY + -44.314048, _originX + 4.630912, _originY + -13.975160, _originX + 2.073272, _originY + -5.684880);
         crc2.bezierCurveTo(_originX + 1.632302, _originY + -2.509880, _originX + 2.778822, _originY + 0.488730, _originX + 1.985072, _originY + 1.458870);
         crc2.bezierCurveTo(_originX + 1.103132, _originY + 2.340813, _originX + -2.777428, _originY + 2.869980, _originX + -2.777428, _originY + -0.040437);
+        crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
     }
     export function drawleave2(_originX: number, _originY: number): void {
         crc2.moveTo(_originX + 0.529166, _originY + -11.288888);

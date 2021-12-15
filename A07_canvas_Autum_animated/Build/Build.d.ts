@@ -39,6 +39,7 @@ declare namespace canvas_Autum_animated {
         setScale(_scale: number): void;
         setColor(_color: string): void;
         setRandomOrigin(): void;
+        leafSlide(): void;
         draw(): void;
     }
 }

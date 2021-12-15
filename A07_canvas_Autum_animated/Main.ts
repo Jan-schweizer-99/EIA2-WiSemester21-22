@@ -15,6 +15,7 @@ namespace canvas_Autum_animated {
   let cloud: Cloud[] = [];
   let tree: Tree[] = [];
   let sky: Sky;
+  let leaf: Leaf[] = [];
   //let sky: Sky = new Sky(2);
   window.addEventListener("load", hndLoad);
 
@@ -63,10 +64,13 @@ namespace canvas_Autum_animated {
     //tree[1].drawForrest();                 //draw trees background
 
 
-    for (let i: number = 0; i < 10; i++) {                        //draw blätter im Vordergrund
+    for (let i: number = 0; i < 20; i++) {                        //draw blätter im Vordergrund
       // drawleave1(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
       // drawleave2(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
       // drawleave3(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
+      leaf[i] = new Leaf(2, Math.floor(Math.random() * 3) + 1);
+      leaf[i].setRotation(Math.random() * 50);
+      leaf[i].setPosition(Math.random() * 1920, Math.random() * 1920 );
     }
     setInterval(update, 10);
     update();
@@ -98,6 +102,14 @@ namespace canvas_Autum_animated {
       cloud[i].draw();
     }
     drawForrest(tree);
+    for (let i: number = 0; i < 100; i++) {                        //draw blätter im Vordergrund
+      leaf[i].leafSlide();
+      leaf[i].draw();
+      if (leaf[i].position.x > 2200 ) {
+        leaf[i].position.x = (Math.random() * 1920) - 1000;
+        leaf[i].position.y = -50;
+      }
+    }
   }
 
   function drawsquirrel(_transX: number, _transY: number, _scale: number): void {
