@@ -23,7 +23,7 @@ namespace canvas_Autum_animated {
   function hndLoad(_event: Event): void {
     let canvas: HTMLCanvasElement = document.querySelector("canvas")!;
     crc2 = canvas.getContext("2d")!;
-    let blatt: Leaf = new Leaf(1, 3); //leaf with scale, type, color
+    //let blatt: Leaf = new Leaf(1, 3); //leaf with scale, type, color
     //let tree: Tree = new Tree(0.5, Math.floor(Math.random() * 3) + 1);
 
     sky = new Sky(2);

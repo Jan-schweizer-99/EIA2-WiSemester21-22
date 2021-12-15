@@ -26,7 +26,7 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
     function hndLoad(_event) {
         let canvas = document.querySelector("canvas");
         canvas_Autum_animated.crc2 = canvas.getContext("2d");
-        let blatt = new canvas_Autum_animated.Leaf(1, 3); //leaf with scale, type, color
+        //let blatt: Leaf = new Leaf(1, 3); //leaf with scale, type, color
         //let tree: Tree = new Tree(0.5, Math.floor(Math.random() * 3) + 1);
         sky = new canvas_Autum_animated.Sky(2);
         sky.setStars();
