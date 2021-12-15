@@ -10,14 +10,17 @@ namespace canvas_Autum_animated {
 
   export let crc2: CanvasRenderingContext2D;
 
-
+  let hill: Hill [] = [];
+  let cloud: Cloud[] = [];
   window.addEventListener("load", hndLoad);
-
   function hndLoad(_event: Event): void {
     let canvas: HTMLCanvasElement = document.querySelector("canvas")!;
     crc2 = canvas.getContext("2d")!;
     let blatt: Leaf = new Leaf(1, 3); //leaf with scale, type, color
-    let berg: Hill = new Hill(2);
+    let tree: Tree = new Tree(0.5, Math.floor(Math.random() * 3) + 1);
+    
+
+
 
     drawsky();                                  //draw sky and stars and moon
     for (let i: number = 0; i < 150; i++) {
@@ -30,15 +33,16 @@ namespace canvas_Autum_animated {
 
 
     for (let i: number = 0; i < 10; i++) {                      //draw clouds and hills
-      // let x: number = Math.random() * 1920;
-      // let y: number = Math.random() * 1080 / 2;
-      let hill: Hill = new Hill(1);
-      hill.setPosition(Math.random() * 1920, Math.random() * 1080 / 2);
-      hill.draw();
+
+      hill[i] = new Hill(1);                                    //erzeuge hills mit indexwerten 1-10
+      hill[i].setPosition(Math.random() * 1920, Math.random() * 1080 / 2);
+      hill[i].draw();
+
       //drawcloud(Math.random() * 1920, Math.random() * 300, 5);
-      let cloud: Cloud = new Cloud(1);
-      cloud.setPosition(Math.random() * 1920, Math.random() * 300);
-      cloud.draw();
+      cloud[i] = new Cloud(1);
+      cloud [i].setPosition(Math.random() * 1920, Math.random() * 300);
+      cloud[i].draw();
+      
     }
 
 
@@ -58,7 +62,7 @@ namespace canvas_Autum_animated {
       drawsquirrel(transX, transY, scale);
     }
 
-    drawforrest();                 //draw trees background
+    tree.drawForrest();                 //draw trees background
 
 
     for (let i: number = 0; i < 10; i++) {                        //draw blätter im Vordergrund
@@ -69,23 +73,31 @@ namespace canvas_Autum_animated {
 
     blatt.setPosition(500, 500);
     blatt.draw();
-    berg.setPosition(1080, Math.random() * 1080 / 2 );
-    berg.draw();
+    //berg.setPosition(1080, Math.random() * 1080 / 2 );
+    //berg.draw();
+    // hill[1].draw();
+    // hill[2].draw();
+    // hill[3].draw();
+    // hill[4].draw();
+    // hill[5].draw();
+    // hill[6].draw();
+    // hill[7].draw();
+    setInterval(update, 10);
+    update();
+  }
+
+  function update(): void {
+    drawsky();
+    drawstars();
+    drawmoon();
+    for (let i: number = 0; i < hill.length; i++) {
+      hill[i].draw();
+      cloud[i].slideright();
+      cloud[i].draw();
+    }
 
   }
-  function drawforrest(): void {
-    let scalefactor: number = 0.5;
-    let layer: number = 600;
-    for (let index: number = 0; index <= 2; index++) {    //draw forrest
-      for (let i: number = 0; i < 5; i++) {
-        let bauum: Tree = new Tree(scalefactor, Math.floor(Math.random() * 3) + 1);     //musste blatt 3 wegen der performance nehmen
-        bauum.setPosition(Math.random() * 1920, layer);
-        bauum.draw();
-      }
-      scalefactor += 0.1;
-      layer += 20;
-    }
-  }
+
   function drawsquirrel(_transX: number, _transY: number, _scale: number): void {
     drawarm(_transX, _transY, _scale);
     drawleg(_transX, _transY, _scale);
