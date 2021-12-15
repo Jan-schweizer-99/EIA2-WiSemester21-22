@@ -63,15 +63,16 @@ declare namespace canvas_Autum_animated {
         scale: number;
         type: number;
         color: string;
-        leaf: Leaf;
-        origin: number;
+        leaf: Leaf[];
+        origin: number[];
+        rotation: number[];
         tree: Tree[];
         constructor(_scale: number, _type: number);
         setType(_type: number): void;
         setPosition(_x: number, _y: number): void;
         setScale(_scale: number): void;
+        setRandomRotation(): void;
         draw(): void;
-        drawForrest(): void;
     }
 }
 declare namespace canvas_Autum_animated {

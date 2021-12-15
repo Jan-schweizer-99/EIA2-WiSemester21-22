@@ -24,7 +24,7 @@ namespace canvas_Autum_animated {
     let canvas: HTMLCanvasElement = document.querySelector("canvas")!;
     crc2 = canvas.getContext("2d")!;
     let blatt: Leaf = new Leaf(1, 3); //leaf with scale, type, color
-    let tree: Tree = new Tree(0.5, Math.floor(Math.random() * 3) + 1);
+    //let tree: Tree = new Tree(0.5, Math.floor(Math.random() * 3) + 1);
 
     sky = new Sky(2);
     sky.setStars();
@@ -40,7 +40,11 @@ namespace canvas_Autum_animated {
       cloud[i] = new Cloud(1);
       cloud [i].setPosition(Math.random() * 1920, Math.random() * 300);
       cloud[i].draw();
-      
+    }
+    for (let i: number = 0; i < 15; i++) {
+      tree[i] = new Tree(1, 1); //Math.floor(Math.random() * 3 ) + 1
+      tree[i].setPosition(Math.random() * 1920, 600);
+      tree[i].setRandomRotation();
     }
 
 
@@ -55,7 +59,8 @@ namespace canvas_Autum_animated {
       drawsquirrel(transX, transY, scale);
     }
 
-    tree.drawForrest();                 //draw trees background
+
+    //tree[1].drawForrest();                 //draw trees background
 
 
     for (let i: number = 0; i < 10; i++) {                        //draw blätter im Vordergrund
@@ -63,12 +68,22 @@ namespace canvas_Autum_animated {
       // drawleave2(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
       // drawleave3(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
     }
-    blatt.setPosition(500, 500);
-    blatt.draw();
     setInterval(update, 10);
     update();
   }
 
+  function drawForrest(tree: Tree[]): void {
+    let scalefactor: number = 0.5;
+    let layer: number = 600;
+    for (let index: number = 0; index <= 2; index++) {    //draw forrest
+      for (let i: number = 0; i < 5; i++) {
+          //let treeForrest: Tree = new Tree(scalefactor, Math.floor(Math.random() * 3) + 1);     //musste blatt 3 wegen der performance nehmen
+        tree[i * index].draw();
+      }
+      scalefactor += 0.1;
+      layer += 20;
+    }
+  }
   function update(): void {
     sky.draw();
     //drawstars(Math.random() * 1920, Math.random() * 1080, 5);
@@ -82,7 +97,7 @@ namespace canvas_Autum_animated {
       }
       cloud[i].draw();
     }
-    tree[1].drawForrest();
+    drawForrest(tree);
   }
 
   function drawsquirrel(_transX: number, _transY: number, _scale: number): void {

@@ -27,7 +27,7 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
         let canvas = document.querySelector("canvas");
         canvas_Autum_animated.crc2 = canvas.getContext("2d");
         let blatt = new canvas_Autum_animated.Leaf(1, 3); //leaf with scale, type, color
-        let tree = new canvas_Autum_animated.Tree(0.5, Math.floor(Math.random() * 3) + 1);
+        //let tree: Tree = new Tree(0.5, Math.floor(Math.random() * 3) + 1);
         sky = new canvas_Autum_animated.Sky(2);
         sky.setStars();
         drawmoon();
@@ -39,6 +39,11 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
             cloud[i].setPosition(Math.random() * 1920, Math.random() * 300);
             cloud[i].draw();
         }
+        for (let i = 0; i < 15; i++) {
+            tree[i] = new canvas_Autum_animated.Tree(1, 1); //Math.floor(Math.random() * 3 ) + 1
+            tree[i].setPosition(Math.random() * 1920, 600);
+            tree[i].setRandomRotation();
+        }
         drawfloor(); //draw grass and floor
         //drawforrest();
         for (let i = 0; i < 4; i++) { //draw campfire
@@ -47,16 +52,26 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
             let scale = 2;
             drawsquirrel(transX, transY, scale);
         }
-        tree.drawForrest(); //draw trees background
+        //tree[1].drawForrest();                 //draw trees background
         for (let i = 0; i < 10; i++) { //draw blätter im Vordergrund
             // drawleave1(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
             // drawleave2(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
             // drawleave3(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
         }
-        blatt.setPosition(500, 500);
-        blatt.draw();
         setInterval(update, 10);
         update();
+    }
+    function drawForrest(tree) {
+        let scalefactor = 0.5;
+        let layer = 600;
+        for (let index = 0; index <= 2; index++) { //draw forrest
+            for (let i = 0; i < 5; i++) {
+                //let treeForrest: Tree = new Tree(scalefactor, Math.floor(Math.random() * 3) + 1);     //musste blatt 3 wegen der performance nehmen
+                tree[i * index].draw();
+            }
+            scalefactor += 0.1;
+            layer += 20;
+        }
     }
     function update() {
         sky.draw();
@@ -71,7 +86,7 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
             }
             cloud[i].draw();
         }
-        tree[1].drawForrest();
+        drawForrest(tree);
     }
     function drawsquirrel(_transX, _transY, _scale) {
         canvas_Autum_animated.drawarm(_transX, _transY, _scale);
@@ -276,14 +291,14 @@ var canvas_Autum_animated;
         canvas_Autum_animated.crc2.bezierCurveTo(_originX + 2.867022, _originY + -6.743214, _originX + 2.161462, _originY + -3.656410, _originX + 0.309382, _originY + -4.891130);
         canvas_Autum_animated.crc2.fill();
         // #path1103
-        canvas_Autum_animated.crc2.beginPath();
-        canvas_Autum_animated.crc2.fillStyle = "rgb(211, 168, 62)";
-        canvas_Autum_animated.crc2.lineWidth = 0.070004;
-        canvas_Autum_animated.crc2.moveTo(_originX + -2.777418, _originY + -0.040437);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 1.279522, _originY + -8.771687, _originX + 6.747572, _originY + -38.934187, _originX + 7.982302, _originY + -47.577242);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 10.275352, _originY + -44.314048, _originX + 4.630912, _originY + -13.975160, _originX + 2.073272, _originY + -5.684880);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 1.632302, _originY + -2.509880, _originX + 2.778822, _originY + 0.488730, _originX + 1.985072, _originY + 1.458870);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 1.103132, _originY + 2.340813, _originX + -2.777428, _originY + 2.869980, _originX + -2.777428, _originY + -0.040437);
+        // crc2.beginPath();
+        // crc2.fillStyle = "rgb(211, 168, 62)";
+        // crc2.lineWidth = 0.070004;
+        // crc2.moveTo(_originX + -2.777418, _originY + -0.040437);
+        // crc2.bezierCurveTo(_originX + 1.279522, _originY + -8.771687, _originX + 6.747572, _originY + -38.934187, _originX + 7.982302, _originY + -47.577242);
+        // crc2.bezierCurveTo(_originX + 10.275352, _originY + -44.314048, _originX + 4.630912, _originY + -13.975160, _originX + 2.073272, _originY + -5.684880);
+        // crc2.bezierCurveTo(_originX + 1.632302, _originY + -2.509880, _originX + 2.778822, _originY + 0.488730, _originX + 1.985072, _originY + 1.458870);
+        // crc2.bezierCurveTo(_originX + 1.103132, _originY + 2.340813, _originX + -2.777428, _originY + 2.869980, _originX + -2.777428, _originY + -0.040437);
         canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
     }
     canvas_Autum_animated.drawleave1 = drawleave1;
@@ -327,88 +342,88 @@ var canvas_Autum_animated;
         canvas_Autum_animated.crc2.bezierCurveTo(_originX + 24.870833, _originY + -12.347222, _originX + 10.583333, _originY + 3.968751, _originX + 0.529166, _originY + -11.288888);
         canvas_Autum_animated.crc2.fill();
         // #path14
-        canvas_Autum_animated.crc2.beginPath();
-        canvas_Autum_animated.crc2.fillStyle = "rgb(233, 78, 27)";
-        canvas_Autum_animated.crc2.lineWidth = 0.070004;
-        canvas_Autum_animated.crc2.moveTo(_originX + 25.576387, _originY + -39.952082);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 25.664587, _originY + -41.098609, _originX + 25.752777, _originY + -42.156943, _originX + 25.311804, _originY + -43.215276);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 25.752777, _originY + -37.659026, _originX + 17.991666, _originY + -27.693054, _originX + 14.111110, _originY + -26.370138);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 13.405554, _originY + -27.604860, _originX + 14.375693, _originY + -29.280554, _originX + 13.846527, _originY + -30.074304);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 12.700000, _originY + -28.398610, _originX + 13.758337, _originY + -26.546526, _originX + 13.317360, _originY + -24.959026);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 11.112500, _originY + -23.195138, _originX + 7.937500, _originY + -18.961805, _originX + 7.849304, _originY + -24.518054);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 9.172220, _originY + -31.220832, _originX + 4.762500, _originY + -19.226388, _originX + 1.234720, _originY + -19.402776);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 0.881943, _originY + -19.314586, _originX + 0.617360, _originY + -19.314586, _originX + 0.793750, _originY + -20.461109);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 0.793750, _originY + -20.813888, _originX + 0.793750, _originY + -21.166665, _originX + 0.705550, _originY + -21.431249);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 0.352773, _originY + -22.401388, _originX + 0.352773, _originY + -23.459722, _originX + -0.000004, _originY + -24.341665);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -0.000004, _originY + -24.429855, _originX + -0.000004, _originY + -25.223610, _originX + 0.088186, _originY + -25.311804);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 4.850686, _originY + -27.693054, _originX + 5.909020, _originY + -33.690276, _originX + 5.997213, _originY + -38.629165);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 4.497909, _originY + -35.630554, _originX + 4.056936, _originY + -28.574999, _originX + -0.000007, _originY + -26.105554);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -0.176390, _originY + -28.927776, _originX + -1.411113, _originY + -32.279165, _originX + -1.058334, _originY + -34.924999);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 2.734027, _originY + -36.336110, _originX + 3.792360, _originY + -48.506943, _originX + 1.234720, _originY + -40.481248);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 0.705554, _originY + -39.334721, _originX + -0.440973, _originY + -35.101388, _originX + -1.763890, _originY + -35.983332);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -2.998613, _originY + -40.393054, _originX + -3.880557, _originY + -48.683332, _originX + -8.290279, _originY + -50.094443);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -3.968751, _originY + -47.713193, _originX + -3.615973, _originY + -40.834026, _originX + -2.469446, _originY + -36.336110);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -2.293057, _originY + -34.043054, _originX + -6.085418, _originY + -37.570832, _originX + -6.879168, _originY + -37.923610);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -0.176390, _originY + -31.926388, _originX + -2.557640, _originY + -37.129860, _originX + -1.058334, _originY + -26.722915);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -3.175000, _originY + -26.281943, _originX + -6.526390, _originY + -31.309026, _originX + -8.378473, _originY + -32.014582);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -6.261807, _originY + -29.192360, _originX + -2.734030, _originY + -27.252082, _originX + -0.881946, _originY + -24.694443);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -1.058334, _originY + -23.459722, _originX + 0.176387, _originY + -20.284722, _originX + -0.881946, _originY + -19.931942);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -4.409723, _originY + -21.607638, _originX + -6.790973, _originY + -23.812499, _originX + -9.701390, _originY + -26.193749);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -6.879168, _originY + -23.371526, _originX + -4.762501, _originY + -20.284722, _originX + -0.617363, _originY + -19.579165);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 0.000000, _originY + -18.432638, _originX + -0.264584, _originY + -16.315972, _originX + -0.176390, _originY + -14.904859);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -3.086807, _originY + -17.462499, _originX + -7.849307, _originY + -18.785415, _originX + -9.965973, _originY + -21.607638);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -10.318751, _originY + -24.077082, _originX + -11.994446, _originY + -25.840971, _originX + -13.758334, _originY + -27.604860);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -14.287501, _originY + -26.811110, _originX + -9.877779, _originY + -22.930555, _originX + -11.288890, _originY + -21.695832);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -15.610418, _originY + -23.018749, _originX + -15.963196, _originY + -26.987499, _originX + -20.020140, _originY + -28.751388);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -21.607640, _originY + -28.663198, _originX + -17.286112, _originY + -25.840971, _originX + -16.933334, _originY + -24.782638);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -21.166668, _originY + -26.458332, _originX + -25.840973, _originY + -28.751388, _originX + -30.427085, _originY + -28.486804);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -29.897918, _originY + -28.310415, _originX + -29.368751, _originY + -28.222221, _originX + -28.927779, _originY + -28.222221);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -24.959029, _originY + -27.252082, _originX + -9.436807, _originY + -22.401388, _originX + -22.225001, _originY + -22.665972);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -23.371529, _originY + -21.960415, _originX + -19.314584, _originY + -21.960415, _originX + -18.609029, _originY + -22.048609);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -17.286112, _originY + -21.784026, _originX + -16.315973, _originY + -23.283332, _originX + -15.169446, _originY + -22.930555);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -7.584723, _originY + -19.490972, _originX + -17.109723, _originY + -20.196526, _originX + -20.284723, _originY + -19.138192);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -17.462501, _originY + -17.727082, _originX + -13.670140, _originY + -18.520832, _originX + -10.936112, _originY + -20.020138);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -9.436807, _originY + -20.108328, _originX + -7.672918, _originY + -18.344442, _originX + -6.438196, _originY + -17.550692);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -10.230557, _originY + -16.580555, _originX + -14.375696, _originY + -16.404165, _originX + -18.079862, _originY + -16.404165);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -14.463890, _originY + -15.081249, _originX + -9.436807, _originY + -15.081249, _originX + -5.909029, _originY + -16.845138);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -4.145140, _originY + -16.933328, _originX + -2.645834, _originY + -14.904859, _originX + -1.146530, _originY + -14.111109);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -1.234720, _originY + -12.259026, _originX + -5.820834, _originY + -12.876388, _originX + -7.496529, _originY + -12.523609);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -10.583334, _originY + -14.552082, _originX + -14.463890, _originY + -15.963192, _originX + -18.168057, _originY + -15.698609);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -15.522223, _originY + -14.552082, _originX + -11.906251, _originY + -14.552082, _originX + -9.525001, _originY + -12.523609);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -12.964584, _originY + -11.906249, _originX + -12.700001, _originY + -13.758332, _originX + -15.345834, _originY + -14.552082);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -19.579168, _originY + -15.522222, _originX + -22.313196, _originY + -15.345832, _originX + -15.963196, _originY + -13.493749);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -14.993057, _originY + -11.818055, _originX + -20.637501, _originY + -13.405559, _originX + -21.695834, _originY + -13.229165);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -19.314584, _originY + -11.818055, _originX + -14.816668, _originY + -12.435415, _originX + -11.729862, _originY + -11.906249);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -10.230557, _originY + -10.318749, _originX + -16.139584, _originY + -10.671526, _originX + -16.756946, _originY + -9.789582);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -11.729862, _originY + -7.937499, _originX + -7.849307, _originY + -12.699999, _originX + -2.822223, _originY + -12.082638);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -2.381250, _originY + -12.170828, _originX + -1.675696, _originY + -11.906249, _originX + -2.028473, _originY + -11.641665);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + -8.819446, _originY + -5.115276, _originX + -2.028473, _originY + -8.554859, _originX + -0.529167, _originY + -12.699999);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 1.852083, _originY + -10.406942, _originX + 0.440970, _originY + -3.527776, _originX + 0.000000, _originY + 0.000001);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 1.587500, _originY + -2.645832, _originX + 1.499304, _originY + -7.055555, _originX + 1.587500, _originY + -10.406942);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 2.734027, _originY + -11.729859, _originX + 6.261804, _originY + -7.672915, _originX + 8.113887, _originY + -5.468055);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 6.702777, _originY + -7.143749, _originX + 10.583333, _originY + -7.143749, _originX + 10.936110, _originY + -5.115276);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 10.230554, _originY + -9.436805, _originX + 3.351387, _originY + -8.466665, _originX + 1.675693, _originY + -12.788192);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 5.820833, _originY + -11.818055, _originX + 9.965970, _originY + -11.112499, _originX + 14.287500, _originY + -11.024305);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 16.404166, _originY + -9.789582, _originX + 18.609027, _originY + -9.436805, _originX + 21.431250, _originY + -9.789582);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 19.843750, _originY + -9.613192, _originX + 18.697220, _originY + -9.877772, _originX + 17.462500, _originY + -10.318749);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 15.257637, _originY + -11.024305, _originX + 25.664583, _originY + -12.082638, _originX + 23.812500, _originY + -12.259026);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 19.931943, _originY + -12.611805, _originX + 16.227777, _originY + -11.906249, _originX + 12.170833, _originY + -12.347226);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 14.199304, _originY + -13.405559, _originX + 17.374304, _originY + -14.552086, _originX + 17.903470, _originY + -16.933336);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 13.670137, _originY + -12.964586, _originX + 6.438193, _originY + -11.818059, _originX + 1.763887, _originY + -14.375696);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 4.321527, _originY + -15.875003, _originX + 6.702777, _originY + -18.785419, _originX + 9.436804, _originY + -19.667363);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 14.552083, _originY + -17.991669, _originX + 21.078470, _originY + -20.637503, _originX + 24.253470, _originY + -24.782642);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 20.549304, _originY + -21.872226, _originX + 15.610416, _originY + -19.138196, _originX + 10.671527, _originY + -20.284726);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 9.436804, _originY + -20.637503, _originX + 14.904860, _originY + -24.959030, _originX + 15.610416, _originY + -24.518058);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 19.402777, _originY + -24.253475, _originX + 23.018750, _originY + -26.634725, _originX + 25.135416, _originY + -29.545142);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 23.195137, _originY + -29.721530, _originX + 19.138193, _originY + -25.135419, _originX + 15.786804, _originY + -25.400003);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 19.931943, _originY + -29.456947, _originX + 24.694443, _originY + -34.131253, _originX + 25.576387, _originY + -39.952086);
-        canvas_Autum_animated.crc2.moveTo(_originX + 0.000000, _originY + -26.105554);
-        canvas_Autum_animated.crc2.lineTo(_originX + 0.000000, _originY + -26.105554);
-        canvas_Autum_animated.crc2.moveTo(_originX + 8.113887, _originY + -20.372915);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 6.879166, _originY + -19.931942, _originX + 1.411110, _originY + -13.140972, _originX + 1.146527, _originY + -16.315972);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 0.970137, _originY + -18.432638, _originX + 0.440970, _originY + -18.961805, _originX + 1.058337, _originY + -18.961805);
-        canvas_Autum_animated.crc2.bezierCurveTo(_originX + 4.762504, _originY + -18.344442, _originX + 7.143754, _originY + -26.546526, _originX + 8.113891, _originY + -20.372915);
-        canvas_Autum_animated.crc2.fill();
+        // crc2.beginPath();
+        // crc2.fillStyle = "rgb(233, 78, 27)";
+        // crc2.lineWidth = 0.070004;
+        // crc2.moveTo(_originX + 25.576387, _originY + -39.952082);
+        // crc2.bezierCurveTo(_originX + 25.664587, _originY + -41.098609, _originX + 25.752777, _originY + -42.156943, _originX + 25.311804, _originY + -43.215276);
+        // crc2.bezierCurveTo(_originX + 25.752777, _originY + -37.659026, _originX + 17.991666, _originY + -27.693054, _originX + 14.111110, _originY + -26.370138);
+        // crc2.bezierCurveTo(_originX + 13.405554, _originY + -27.604860, _originX + 14.375693, _originY + -29.280554, _originX + 13.846527, _originY + -30.074304);
+        // crc2.bezierCurveTo(_originX + 12.700000, _originY + -28.398610, _originX + 13.758337, _originY + -26.546526, _originX + 13.317360, _originY + -24.959026);
+        // crc2.bezierCurveTo(_originX + 11.112500, _originY + -23.195138, _originX + 7.937500, _originY + -18.961805, _originX + 7.849304, _originY + -24.518054);
+        // crc2.bezierCurveTo(_originX + 9.172220, _originY + -31.220832, _originX + 4.762500, _originY + -19.226388, _originX + 1.234720, _originY + -19.402776);
+        // crc2.bezierCurveTo(_originX + 0.881943, _originY + -19.314586, _originX + 0.617360, _originY + -19.314586, _originX + 0.793750, _originY + -20.461109);
+        // crc2.bezierCurveTo(_originX + 0.793750, _originY + -20.813888, _originX + 0.793750, _originY + -21.166665, _originX + 0.705550, _originY + -21.431249);
+        // crc2.bezierCurveTo(_originX + 0.352773, _originY + -22.401388, _originX + 0.352773, _originY + -23.459722, _originX + -0.000004, _originY + -24.341665);
+        // crc2.bezierCurveTo(_originX + -0.000004, _originY + -24.429855, _originX + -0.000004, _originY + -25.223610, _originX + 0.088186, _originY + -25.311804);
+        // crc2.bezierCurveTo(_originX + 4.850686, _originY + -27.693054, _originX + 5.909020, _originY + -33.690276, _originX + 5.997213, _originY + -38.629165);
+        // crc2.bezierCurveTo(_originX + 4.497909, _originY + -35.630554, _originX + 4.056936, _originY + -28.574999, _originX + -0.000007, _originY + -26.105554);
+        // crc2.bezierCurveTo(_originX + -0.176390, _originY + -28.927776, _originX + -1.411113, _originY + -32.279165, _originX + -1.058334, _originY + -34.924999);
+        // crc2.bezierCurveTo(_originX + 2.734027, _originY + -36.336110, _originX + 3.792360, _originY + -48.506943, _originX + 1.234720, _originY + -40.481248);
+        // crc2.bezierCurveTo(_originX + 0.705554, _originY + -39.334721, _originX + -0.440973, _originY + -35.101388, _originX + -1.763890, _originY + -35.983332);
+        // crc2.bezierCurveTo(_originX + -2.998613, _originY + -40.393054, _originX + -3.880557, _originY + -48.683332, _originX + -8.290279, _originY + -50.094443);
+        // crc2.bezierCurveTo(_originX + -3.968751, _originY + -47.713193, _originX + -3.615973, _originY + -40.834026, _originX + -2.469446, _originY + -36.336110);
+        // crc2.bezierCurveTo(_originX + -2.293057, _originY + -34.043054, _originX + -6.085418, _originY + -37.570832, _originX + -6.879168, _originY + -37.923610);
+        // crc2.bezierCurveTo(_originX + -0.176390, _originY + -31.926388, _originX + -2.557640, _originY + -37.129860, _originX + -1.058334, _originY + -26.722915);
+        // crc2.bezierCurveTo(_originX + -3.175000, _originY + -26.281943, _originX + -6.526390, _originY + -31.309026, _originX + -8.378473, _originY + -32.014582);
+        // crc2.bezierCurveTo(_originX + -6.261807, _originY + -29.192360, _originX + -2.734030, _originY + -27.252082, _originX + -0.881946, _originY + -24.694443);
+        // crc2.bezierCurveTo(_originX + -1.058334, _originY + -23.459722, _originX + 0.176387, _originY + -20.284722, _originX + -0.881946, _originY + -19.931942);
+        // crc2.bezierCurveTo(_originX + -4.409723, _originY + -21.607638, _originX + -6.790973, _originY + -23.812499, _originX + -9.701390, _originY + -26.193749);
+        // crc2.bezierCurveTo(_originX + -6.879168, _originY + -23.371526, _originX + -4.762501, _originY + -20.284722, _originX + -0.617363, _originY + -19.579165);
+        // crc2.bezierCurveTo(_originX + 0.000000, _originY + -18.432638, _originX + -0.264584, _originY + -16.315972, _originX + -0.176390, _originY + -14.904859);
+        // crc2.bezierCurveTo(_originX + -3.086807, _originY + -17.462499, _originX + -7.849307, _originY + -18.785415, _originX + -9.965973, _originY + -21.607638);
+        // crc2.bezierCurveTo(_originX + -10.318751, _originY + -24.077082, _originX + -11.994446, _originY + -25.840971, _originX + -13.758334, _originY + -27.604860);
+        // crc2.bezierCurveTo(_originX + -14.287501, _originY + -26.811110, _originX + -9.877779, _originY + -22.930555, _originX + -11.288890, _originY + -21.695832);
+        // crc2.bezierCurveTo(_originX + -15.610418, _originY + -23.018749, _originX + -15.963196, _originY + -26.987499, _originX + -20.020140, _originY + -28.751388);
+        // crc2.bezierCurveTo(_originX + -21.607640, _originY + -28.663198, _originX + -17.286112, _originY + -25.840971, _originX + -16.933334, _originY + -24.782638);
+        // crc2.bezierCurveTo(_originX + -21.166668, _originY + -26.458332, _originX + -25.840973, _originY + -28.751388, _originX + -30.427085, _originY + -28.486804);
+        // crc2.bezierCurveTo(_originX + -29.897918, _originY + -28.310415, _originX + -29.368751, _originY + -28.222221, _originX + -28.927779, _originY + -28.222221);
+        // crc2.bezierCurveTo(_originX + -24.959029, _originY + -27.252082, _originX + -9.436807, _originY + -22.401388, _originX + -22.225001, _originY + -22.665972);
+        // crc2.bezierCurveTo(_originX + -23.371529, _originY + -21.960415, _originX + -19.314584, _originY + -21.960415, _originX + -18.609029, _originY + -22.048609);
+        // crc2.bezierCurveTo(_originX + -17.286112, _originY + -21.784026, _originX + -16.315973, _originY + -23.283332, _originX + -15.169446, _originY + -22.930555);
+        // crc2.bezierCurveTo(_originX + -7.584723, _originY + -19.490972, _originX + -17.109723, _originY + -20.196526, _originX + -20.284723, _originY + -19.138192);
+        // crc2.bezierCurveTo(_originX + -17.462501, _originY + -17.727082, _originX + -13.670140, _originY + -18.520832, _originX + -10.936112, _originY + -20.020138);
+        // crc2.bezierCurveTo(_originX + -9.436807, _originY + -20.108328, _originX + -7.672918, _originY + -18.344442, _originX + -6.438196, _originY + -17.550692);
+        // crc2.bezierCurveTo(_originX + -10.230557, _originY + -16.580555, _originX + -14.375696, _originY + -16.404165, _originX + -18.079862, _originY + -16.404165);
+        // crc2.bezierCurveTo(_originX + -14.463890, _originY + -15.081249, _originX + -9.436807, _originY + -15.081249, _originX + -5.909029, _originY + -16.845138);
+        // crc2.bezierCurveTo(_originX + -4.145140, _originY + -16.933328, _originX + -2.645834, _originY + -14.904859, _originX + -1.146530, _originY + -14.111109);
+        // crc2.bezierCurveTo(_originX + -1.234720, _originY + -12.259026, _originX + -5.820834, _originY + -12.876388, _originX + -7.496529, _originY + -12.523609);
+        // crc2.bezierCurveTo(_originX + -10.583334, _originY + -14.552082, _originX + -14.463890, _originY + -15.963192, _originX + -18.168057, _originY + -15.698609);
+        // crc2.bezierCurveTo(_originX + -15.522223, _originY + -14.552082, _originX + -11.906251, _originY + -14.552082, _originX + -9.525001, _originY + -12.523609);
+        // crc2.bezierCurveTo(_originX + -12.964584, _originY + -11.906249, _originX + -12.700001, _originY + -13.758332, _originX + -15.345834, _originY + -14.552082);
+        // crc2.bezierCurveTo(_originX + -19.579168, _originY + -15.522222, _originX + -22.313196, _originY + -15.345832, _originX + -15.963196, _originY + -13.493749);
+        // crc2.bezierCurveTo(_originX + -14.993057, _originY + -11.818055, _originX + -20.637501, _originY + -13.405559, _originX + -21.695834, _originY + -13.229165);
+        // crc2.bezierCurveTo(_originX + -19.314584, _originY + -11.818055, _originX + -14.816668, _originY + -12.435415, _originX + -11.729862, _originY + -11.906249);
+        // crc2.bezierCurveTo(_originX + -10.230557, _originY + -10.318749, _originX + -16.139584, _originY + -10.671526, _originX + -16.756946, _originY + -9.789582);
+        // crc2.bezierCurveTo(_originX + -11.729862, _originY + -7.937499, _originX + -7.849307, _originY + -12.699999, _originX + -2.822223, _originY + -12.082638);
+        // crc2.bezierCurveTo(_originX + -2.381250, _originY + -12.170828, _originX + -1.675696, _originY + -11.906249, _originX + -2.028473, _originY + -11.641665);
+        // crc2.bezierCurveTo(_originX + -8.819446, _originY + -5.115276, _originX + -2.028473, _originY + -8.554859, _originX + -0.529167, _originY + -12.699999);
+        // crc2.bezierCurveTo(_originX + 1.852083, _originY + -10.406942, _originX + 0.440970, _originY + -3.527776, _originX + 0.000000, _originY + 0.000001);
+        // crc2.bezierCurveTo(_originX + 1.587500, _originY + -2.645832, _originX + 1.499304, _originY + -7.055555, _originX + 1.587500, _originY + -10.406942);
+        // crc2.bezierCurveTo(_originX + 2.734027, _originY + -11.729859, _originX + 6.261804, _originY + -7.672915, _originX + 8.113887, _originY + -5.468055);
+        // crc2.bezierCurveTo(_originX + 6.702777, _originY + -7.143749, _originX + 10.583333, _originY + -7.143749, _originX + 10.936110, _originY + -5.115276);
+        // crc2.bezierCurveTo(_originX + 10.230554, _originY + -9.436805, _originX + 3.351387, _originY + -8.466665, _originX + 1.675693, _originY + -12.788192);
+        // crc2.bezierCurveTo(_originX + 5.820833, _originY + -11.818055, _originX + 9.965970, _originY + -11.112499, _originX + 14.287500, _originY + -11.024305);
+        // crc2.bezierCurveTo(_originX + 16.404166, _originY + -9.789582, _originX + 18.609027, _originY + -9.436805, _originX + 21.431250, _originY + -9.789582);
+        // crc2.bezierCurveTo(_originX + 19.843750, _originY + -9.613192, _originX + 18.697220, _originY + -9.877772, _originX + 17.462500, _originY + -10.318749);
+        // crc2.bezierCurveTo(_originX + 15.257637, _originY + -11.024305, _originX + 25.664583, _originY + -12.082638, _originX + 23.812500, _originY + -12.259026);
+        // crc2.bezierCurveTo(_originX + 19.931943, _originY + -12.611805, _originX + 16.227777, _originY + -11.906249, _originX + 12.170833, _originY + -12.347226);
+        // crc2.bezierCurveTo(_originX + 14.199304, _originY + -13.405559, _originX + 17.374304, _originY + -14.552086, _originX + 17.903470, _originY + -16.933336);
+        // crc2.bezierCurveTo(_originX + 13.670137, _originY + -12.964586, _originX + 6.438193, _originY + -11.818059, _originX + 1.763887, _originY + -14.375696);
+        // crc2.bezierCurveTo(_originX + 4.321527, _originY + -15.875003, _originX + 6.702777, _originY + -18.785419, _originX + 9.436804, _originY + -19.667363);
+        // crc2.bezierCurveTo(_originX + 14.552083, _originY + -17.991669, _originX + 21.078470, _originY + -20.637503, _originX + 24.253470, _originY + -24.782642);
+        // crc2.bezierCurveTo(_originX + 20.549304, _originY + -21.872226, _originX + 15.610416, _originY + -19.138196, _originX + 10.671527, _originY + -20.284726);
+        // crc2.bezierCurveTo(_originX + 9.436804, _originY + -20.637503, _originX + 14.904860, _originY + -24.959030, _originX + 15.610416, _originY + -24.518058);
+        // crc2.bezierCurveTo(_originX + 19.402777, _originY + -24.253475, _originX + 23.018750, _originY + -26.634725, _originX + 25.135416, _originY + -29.545142);
+        // crc2.bezierCurveTo(_originX + 23.195137, _originY + -29.721530, _originX + 19.138193, _originY + -25.135419, _originX + 15.786804, _originY + -25.400003);
+        // crc2.bezierCurveTo(_originX + 19.931943, _originY + -29.456947, _originX + 24.694443, _originY + -34.131253, _originX + 25.576387, _originY + -39.952086);
+        // crc2.moveTo(_originX + 0.000000, _originY + -26.105554);
+        // crc2.lineTo(_originX + 0.000000, _originY + -26.105554);
+        // crc2.moveTo(_originX + 8.113887, _originY + -20.372915);
+        // crc2.bezierCurveTo(_originX + 6.879166, _originY + -19.931942, _originX + 1.411110, _originY + -13.140972, _originX + 1.146527, _originY + -16.315972);
+        // crc2.bezierCurveTo(_originX + 0.970137, _originY + -18.432638, _originX + 0.440970, _originY + -18.961805, _originX + 1.058337, _originY + -18.961805);
+        // crc2.bezierCurveTo(_originX + 4.762504, _originY + -18.344442, _originX + 7.143754, _originY + -26.546526, _originX + 8.113891, _originY + -20.372915);
+        // crc2.fill();
         canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
     }
     canvas_Autum_animated.drawleave2 = drawleave2;
@@ -807,8 +822,9 @@ var canvas_Autum_animated;
         scale;
         type;
         color;
-        leaf;
-        origin;
+        leaf = [];
+        origin = [];
+        rotation = [];
         tree = [];
         constructor(_scale, _type) {
             this.position = new canvas_Autum_animated.Vector(0, 0);
@@ -825,6 +841,13 @@ var canvas_Autum_animated;
         setScale(_scale) {
             this.scale = _scale;
         }
+        setRandomRotation() {
+            for (let i = 0; i < 10; i++) {
+                this.leaf[i] = new canvas_Autum_animated.Leaf(1 * this.scale, this.type); //leaf with scale, type, color
+                this.leaf[i].setRotation((Math.random() * 360) * -1 * Math.PI / 180);
+                this.leaf[i].setRandomOrigin();
+            }
+        }
         draw() {
             canvas_Autum_animated.crc2.translate(this.position.x, this.position.y); //erst verschieben
             canvas_Autum_animated.crc2.scale(this.scale * 5, this.scale * 5); //scale
@@ -834,26 +857,11 @@ var canvas_Autum_animated;
             canvas_Autum_animated.drawTreewood();
             canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
             for (let i = 0; i < 10; i++) { //draw leave 
-                this.leaf = new canvas_Autum_animated.Leaf(1 * this.scale, this.type); //leaf with scale, type, color
-                this.leaf.setPosition(this.position.x, this.position.y - 240 * this.scale);
-                this.leaf.setRandomOrigin();
-                this.leaf.setType(this.type);
-                this.leaf.setRotation(((Math.random() * 360) * -1 * Math.PI / 180));
-                this.leaf.draw();
+                this.leaf[i].setPosition(this.position.x, this.position.y - 240 * this.scale);
+                this.leaf[i].setType(this.type);
+                //this.leaf[i].setRotation((Math.random() * 360) * -1 * Math.PI / 180);
+                this.leaf[i].draw();
                 // drawleave1(this.position.x, this.position.y - (142 * 1), 0.5 * 1, Math.random() * 200, 0);
-            }
-        }
-        drawForrest() {
-            let scalefactor = 0.5;
-            let layer = 600;
-            for (let index = 0; index <= 2; index++) { //draw forrest
-                for (let i = 0; i < 5; i++) {
-                    let treeForrest = new Tree(scalefactor, Math.floor(Math.random() * 3) + 1); //musste blatt 3 wegen der performance nehmen
-                    treeForrest.setPosition(Math.random() * 1920, layer);
-                    treeForrest.draw();
-                }
-                scalefactor += 0.1;
-                layer += 20;
             }
         }
     }

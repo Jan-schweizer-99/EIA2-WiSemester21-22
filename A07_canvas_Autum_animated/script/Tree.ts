@@ -4,8 +4,9 @@ namespace canvas_Autum_animated {
         scale: number;
         type: number;
         color: string;
-        leaf: Leaf;
-        origin: number;
+        leaf: Leaf [] = [];
+        origin: number [] = [];
+        rotation: number[] = [];
         tree: Tree[] = [];
         
 
@@ -26,6 +27,13 @@ namespace canvas_Autum_animated {
         setScale(_scale: number): void {
             this.scale = _scale;
         }
+        setRandomRotation(): void {
+            for (let i: number = 0; i < 10; i++) {
+            this.leaf[i] = new Leaf(1 * this.scale, this.type); //leaf with scale, type, color
+            this.leaf[i].setRotation((Math.random() * 360) * -1 * Math.PI / 180);
+            this.leaf[i].setRandomOrigin();
+            }
+        }
 
         draw(): void {
             crc2.translate(this.position.x, this.position.y); //erst verschieben
@@ -38,27 +46,12 @@ namespace canvas_Autum_animated {
             drawTreewood();
             crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
             for (let i: number = 0; i < 10; i++) {               //draw leave 
-                this.leaf = new Leaf(1 * this.scale, this.type); //leaf with scale, type, color
-                this.leaf.setPosition(this.position.x, this.position.y - 240 * this.scale);
-                this.leaf.setRandomOrigin();
-                this.leaf.setType(this.type);
-                this.leaf.setRotation(((Math.random() * 360) * -1 * Math.PI / 180));
-                this.leaf.draw();
+                this.leaf[i].setPosition(this.position.x, this.position.y - 240 * this.scale);
+                this.leaf[i].setType(this.type);
+                //this.leaf[i].setRotation((Math.random() * 360) * -1 * Math.PI / 180);
+                this.leaf[i].draw();
                 // drawleave1(this.position.x, this.position.y - (142 * 1), 0.5 * 1, Math.random() * 200, 0);
             }
         }
-        drawForrest(): void {
-            let scalefactor: number = 0.5;
-            let layer: number = 600;
-            for (let index: number = 0; index <= 2; index++) {    //draw forrest
-              for (let i: number = 0; i < 5; i++) {
-                let treeForrest: Tree = new Tree(scalefactor, Math.floor(Math.random() * 3) + 1);     //musste blatt 3 wegen der performance nehmen
-                treeForrest.setPosition(Math.random() * 1920, layer);
-                treeForrest.draw();
-              }
-              scalefactor += 0.1;
-              layer += 20;
-            }
-          }
     }
 }
