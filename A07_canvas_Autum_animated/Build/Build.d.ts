@@ -56,6 +56,18 @@ declare namespace canvas_Autum_animated {
 }
 declare namespace canvas_Autum_animated {
     class Squirrel {
+        position: Vector;
+        scale: number;
+        type: number;
+        rotation: number[];
+        constructor(_scale: number, _type: number);
+        setType(_type: number): void;
+        setPosition(_x: number, _y: number): void;
+        setScale(_scale: number): void;
+        setColor(_color: string): void;
+        setRandomOrigin(): void;
+        leafSlide(): void;
+        draw(): void;
     }
 }
 declare namespace canvas_Autum_animated {

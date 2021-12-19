@@ -54,7 +54,7 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
             drawsquirrel(transX, transY, scale);
         }
         //tree[1].drawForrest();                 //draw trees background
-        for (let i = 0; i < 20; i++) { //draw blätter im Vordergrund
+        for (let i = 0; i < 100; i++) { //draw blätter im Vordergrund
             // drawleave1(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
             // drawleave2(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
             // drawleave3(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
@@ -66,15 +66,15 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
         update();
     }
     function drawForrest(tree) {
-        let scalefactor = 0.5;
-        let layer = 600;
+        //let scalefactor: number = 0.5;
+        //let layer: number = 600;
         for (let index = 0; index <= 2; index++) { //draw forrest
             for (let i = 0; i < 5; i++) {
                 //let treeForrest: Tree = new Tree(scalefactor, Math.floor(Math.random() * 3) + 1);     //musste blatt 3 wegen der performance nehmen
                 tree[i * index].draw();
             }
-            scalefactor += 0.1;
-            layer += 20;
+            //    scalefactor += 0.1;
+            //    layer += 20;
         }
     }
     function update() {
@@ -830,6 +830,61 @@ var canvas_Autum_animated;
 var canvas_Autum_animated;
 (function (canvas_Autum_animated) {
     class Squirrel {
+        position;
+        scale;
+        type;
+        rotation = []; //arm -> 0 || leg -> 1 || arm -> 2 || leg -> 3
+        constructor(_scale, _type) {
+            this.rotation[0] = (90 * Math.PI / 180); // go to 0
+            this.rotation[1] = (45 * Math.PI / 180); // go to 0
+            this.rotation[2] = (0 * Math.PI / 180); //go to 90
+            this.rotation[3] = (0 * Math.PI / 180); //go to 90
+            this.position = new canvas_Autum_animated.Vector(0, 0);
+            this.setType(_type);
+            this.setScale(_scale);
+            // this.setSizetree();
+            // this.sizeTree();
+        }
+        setType(_type) {
+            this.type = _type;
+        }
+        setPosition(_x, _y) {
+            this.position.x = _x;
+            this.position.y = _y;
+        }
+        setScale(_scale) {
+            this.scale = _scale;
+        }
+        setColor(_color) {
+            //    this.color = _color;
+        }
+        setRandomOrigin() {
+            //    this.originx = Math.random() * 130;
+        }
+        leafSlide() {
+            this.position.x += 2;
+            this.position.y += 2;
+            //    this.rotation += 0.1;
+        }
+        draw() {
+            canvas_Autum_animated.crc2.translate(this.position.x, this.position.y); //erst verschieben
+            canvas_Autum_animated.crc2.scale(this.scale, this.scale); //scale
+            //crc2.rotate(this.rotation); //zufällige ausrichtung
+            canvas_Autum_animated.crc2.beginPath();
+            //    crc2.fillStyle = this.color;
+            canvas_Autum_animated.crc2.lineWidth = 0.070004;
+            canvas_Autum_animated.crc2.shadowBlur = 0;
+            if (this.type == 1) {
+                //    drawleave1(this.originx, 0); //path with moveable origin
+            }
+            if (this.type == 2) {
+                //    drawleave2(this.originx, 0); //path with moveable origin
+            }
+            if (this.type == 3) {
+                //    drawleave3(this.originx, 0); //path with moveable origin
+            }
+            canvas_Autum_animated.crc2.setTransform(1, 0, 0, 1, 0, 0); //reset scale
+        }
     }
     canvas_Autum_animated.Squirrel = Squirrel;
 })(canvas_Autum_animated || (canvas_Autum_animated = {}));

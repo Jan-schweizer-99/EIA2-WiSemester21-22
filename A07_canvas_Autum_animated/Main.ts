@@ -64,7 +64,7 @@ namespace canvas_Autum_animated {
     //tree[1].drawForrest();                 //draw trees background
 
 
-    for (let i: number = 0; i < 20; i++) {                        //draw blätter im Vordergrund
+    for (let i: number = 0; i < 100; i++) {                        //draw blätter im Vordergrund
       // drawleave1(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
       // drawleave2(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
       // drawleave3(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
@@ -77,15 +77,15 @@ namespace canvas_Autum_animated {
   }
 
   function drawForrest(tree: Tree[]): void {
-    let scalefactor: number = 0.5;
-    let layer: number = 600;
+    //let scalefactor: number = 0.5;
+    //let layer: number = 600;
     for (let index: number = 0; index <= 2; index++) {    //draw forrest
       for (let i: number = 0; i < 5; i++) {
           //let treeForrest: Tree = new Tree(scalefactor, Math.floor(Math.random() * 3) + 1);     //musste blatt 3 wegen der performance nehmen
         tree[i * index].draw();
       }
-      scalefactor += 0.1;
-      layer += 20;
+  //    scalefactor += 0.1;
+  //    layer += 20;
     }
   }
   function update(): void {
@@ -119,7 +119,6 @@ namespace canvas_Autum_animated {
     drawarm(_transX, _transY, _scale);
     drawleg(_transX, _transY, _scale);
     //drawlegfront
-
   }
   function drawfloor(): void {    //blauer Abendhintergrund
     crc2.beginPath();
