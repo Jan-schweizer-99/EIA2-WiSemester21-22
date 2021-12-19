@@ -6,7 +6,7 @@ var A08_McdonaldsFarm_Heritage;
     function hndLoad(_event) {
         //let cow: Animal = new Animal("Kuh");
         //let chicken: Animal = new Animal("Huhn");
-        let dogo = new A08_McdonaldsFarm_Heritage.Dog();
+        let dog = new A08_McdonaldsFarm_Heritage.Dog();
         //let bull: Animal = new Animal("Bulle");
         //let pig: Animal = new Animal("Schwein");
         // let nextDay: HTMLButtonElement = <HTMLButtonElement>document.querySelector("#nextDay");
