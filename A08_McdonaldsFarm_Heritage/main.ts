@@ -8,7 +8,7 @@ namespace A08_McdonaldsFarm_Heritage {
 
         //let cow: Animal = new Animal("Kuh");
         //let chicken: Animal = new Animal("Huhn");
-        let dog: Dog = new Dog();
+        //let dog: Dog = new Dog();
         //let bull: Animal = new Animal("Bulle");
         //let pig: Animal = new Animal("Schwein");
 
