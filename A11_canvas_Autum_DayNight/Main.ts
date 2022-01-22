@@ -5,11 +5,8 @@ Matrikel: 268365
 Datum: 27.01.2021
 Quellen: Artur Erlich (MIB) hat mir empfolen ein skript zu schreiben damit ich das generierte Canvas Element (aus inkskape) 
 vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projekt. Es befindet sich im Ordner OriginMover im projekt canvas_atum
-
-Code ein wenig abgeschaut bei Dell'Oro, Amélie
-
 */
-namespace canvas_Autum_poly {
+namespace canvas_Autum_animated {
 
   export let crc2: CanvasRenderingContext2D;
 
@@ -27,11 +24,8 @@ namespace canvas_Autum_poly {
   function hndLoad(_event: Event): void {
     let canvas: HTMLCanvasElement = document.querySelector("canvas")!;
     crc2 = canvas.getContext("2d")!;
-    //let blatt: Leaf = new Leaf(1, 3); //leaf with scale, type, color
-    //let tree: Tree = new Tree(0.5, Math.floor(Math.random() * 3) + 1);
 
     sky = new Sky(2);
-
     sky.setStars();
     drawmoon();
 
@@ -69,16 +63,12 @@ namespace canvas_Autum_poly {
 
 
     for (let i: number = 0; i < 100; i++) {                        //draw blätter im Vordergrund
-      // drawleave1(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
-      // drawleave2(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
-      // drawleave3(Math.random() * 1920, Math.random() * 1080, 1.5, 0, 0);
       leaf[i] = new Leaf(2, Math.floor(Math.random() * 3) + 1);
       leaf[i].setRotation(Math.random() * 50);
       leaf[i].setPosition(Math.random() * 1920, Math.random() * 1920 );
     }
-
     setInterval(update, 10);
-    //update();
+    update();
   }
 
   function drawForrest(tree: Tree[]): void {

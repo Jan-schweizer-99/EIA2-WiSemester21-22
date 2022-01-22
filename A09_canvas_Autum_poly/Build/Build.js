@@ -6,6 +6,9 @@ Matrikel: 268365
 Datum: 27.01.2021
 Quellen: Artur Erlich (MIB) hat mir empfolen ein skript zu schreiben damit ich das generierte Canvas Element (aus inkskape)
 vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projekt. Es befindet sich im Ordner OriginMover im projekt canvas_atum
+
+Code ein wenig abgeschaut bei Dell'Oro, Amélie
+
 */
 var canvas_Autum_poly;
 /*
@@ -15,6 +18,9 @@ Matrikel: 268365
 Datum: 27.01.2021
 Quellen: Artur Erlich (MIB) hat mir empfolen ein skript zu schreiben damit ich das generierte Canvas Element (aus inkskape)
 vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projekt. Es befindet sich im Ordner OriginMover im projekt canvas_atum
+
+Code ein wenig abgeschaut bei Dell'Oro, Amélie
+
 */
 (function (canvas_Autum_poly) {
     let hill = [];
@@ -63,7 +69,7 @@ vom uhrsprung verschieben kann. Dies Tat ich dann und machte ich auch ins Projek
             leaf[i].setPosition(Math.random() * 1920, Math.random() * 1920);
         }
         setInterval(update, 10);
-        update();
+        //update();
     }
     function drawForrest(tree) {
         //let scalefactor: number = 0.5;
@@ -287,6 +293,25 @@ var canvas_Autum_poly;
         }
     }
     canvas_Autum_poly.Leaf = Leaf;
+})(canvas_Autum_poly || (canvas_Autum_poly = {}));
+var canvas_Autum_poly;
+(function (canvas_Autum_poly) {
+    class Moveable {
+        position;
+        velocity;
+        rotation;
+        scale;
+        constructor(_position, _rotation, _scale) {
+            this.position = _position;
+            this.velocity = new canvas_Autum_poly.Vector(0, 0);
+            this.rotation = _rotation;
+            this.scale = _scale;
+        }
+        move() {
+            let offset = this.velocity.copy();
+        }
+    }
+    canvas_Autum_poly.Moveable = Moveable;
 })(canvas_Autum_poly || (canvas_Autum_poly = {}));
 var canvas_Autum_poly;
 (function (canvas_Autum_poly) {
@@ -959,6 +984,10 @@ var canvas_Autum_poly;
         add(_addend) {
             this.x += _addend.x;
             this.y += _addend.y;
+        }
+        copy() {
+            let copy = new Vector(this.x, this.y);
+            return (copy);
         }
     }
     canvas_Autum_poly.Vector = Vector;

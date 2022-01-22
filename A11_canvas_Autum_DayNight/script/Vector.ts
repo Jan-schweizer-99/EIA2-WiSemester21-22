@@ -1,4 +1,4 @@
-namespace canvas_Autum_poly {
+namespace canvas_Autum_animated {
     export class Vector {
         x: number;
         y: number;
@@ -20,10 +20,6 @@ namespace canvas_Autum_poly {
         add(_addend: Vector): void {
             this.x += _addend.x;
             this.y += _addend.y;
-        }
-        copy(): Vector {
-            let copy: Vector = new Vector(this.x, this.y);
-            return (copy);
         }
     }
 }
