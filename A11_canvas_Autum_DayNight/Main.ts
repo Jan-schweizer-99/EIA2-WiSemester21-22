@@ -29,7 +29,6 @@ namespace canvas_Autum_animated {
     sky.setStars();
     drawmoon();
 
-
     for (let i: number = 0; i < 10; i++) {                      //draw clouds and hills
 
       hill[i] = new Hill(1);                                    //erzeuge hills mit indexwerten 1-10
